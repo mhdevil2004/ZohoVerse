@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Simulator</title>
+    <style>
+        :root {
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --danger-color: #ea4335;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+            --card-bg: #fff;
+            --border-color: #ddd;
+        }
+
+        .dark-mode {
+            --primary-color: #8ab4f8;
+            --secondary-color: #81c995;
+            --danger-color: #f28b82;
+            --text-color: #e8eaed;
+            --bg-color: #202124;
+            --card-bg: #292a2d;
+            --border-color: #5f6368;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-card {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        video {
+            width: 100%;
+            background-color: #000;
+            border-radius: 8px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .recording-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            color: var(--danger-color);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--danger-color);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(66, 133, 244, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            display: none;
+        }
+
+        .feedback h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .rating {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .star {
+            color: #ffc107;
+            font-size: 1.5rem;
+        }
+
+        .start-screen {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .start-screen p {
+            margin-bottom: 30px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+        }
+
+        .results-screen {
+            display: none;
+        }
+
+        .result-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-question {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .result-feedback {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .final-score {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .improvement-tips {
+            margin-top: 30px;
+        }
+
+        .improvement-tips h3 {
+            margin-bottom: 15px;
+        }
+
+        .improvement-tips ul {
+            padding-left: 20px;
+        }
+
+        .improvement-tips li {
+            margin-bottom: 8px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: var(--border-color);
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .timer {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Interview Simulator</h1>
+            <button class="theme-toggle" id="themeToggle">🌓</button>
+        </header>
+
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+
+        <div class="start-screen" id="startScreen">
+            <h2>Practice Your Interview Skills</h2>
+            <p>Get ready for your next job interview with our simulator. Answer 10 professional questions, record your responses, and receive instant feedback to improve your performance.</p>
+            <button class="btn-primary start-btn" id="startBtn">Start Interview</button>
+        </div>
+
+        <div class="question-card active" id="welcomeCard">
+            <div class="question-text">Welcome to the interview simulator! When you're ready, we'll begin with the first question.</div>
+            <div class="controls">
+                <button class="btn-primary" id="nextWelcomeBtn">Begin Interview</button>
+            </div>
+        </div>
+
+        <div class="question-card" id="question1">
+            <div class="question-text">Tell me about yourself.</div>
+            <div class="recording-indicator" id="recordingIndicator1">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview1" controls></video>
+            </div>
+            <div class="timer" id="timer1"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording1">Start Recording</button>
+                <button class="btn-danger" id="stopRecording1" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion1" disabled>Next Question</button>
+            </div>
+            <div class="feedback" id="feedback1">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating1"></div>
+                <p id="feedbackText1"></p>
+            </div>
+        </div>
+
+        <div class="question-card" id="question2">
+            <div class="question-text">What are your biggest strengths?</div>
+            <div class="recording-indicator" id="recordingIndicator2">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview2" controls></video>
+            </div>
+            <div class="timer" id="timer2"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording2">Start Recording</button>
+                <button class="btn-danger" id="stopRecording2" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion2" disabled>Next Question</button>
+            </div>
+            <div class="feedback" id="feedback2">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating2"></div>
+                <p id="feedbackText2"></p>
+            </div>
+        </div>
+
+        <div class="question-card" id="question3">
+            <div class="question-text">Describe your favorite project and your role.</div>
+            <div class="recording-indicator" id="recordingIndicator3">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview3" controls></video>
+            </div>
+            <div class="timer" id="timer3"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording3">Start Recording</button>
+                <button class="btn-danger" id="stopRecording3" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion3" disabled>Next Question</button>
+            </div>
+            <div class="feedback" id="feedback3">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating3"></div>
+                <p id="feedbackText3"></p>
+            </div>
+        </div>
+
+        <div class="question-card" id="question4">
+            <div class="question-text">How do you handle failure?</div>
+            <div class="recording-indicator" id="recordingIndicator4">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview4" controls></video>
+            </div>
+            <div class="timer" id="timer4"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording4">Start Recording</button>
+                <button class="btn-danger" id="stopRecording4" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion4" disabled>Next Question</button>
+            </div>
+            <div class="feedback" id="feedback4">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating4"></div>
+                <p id="feedbackText4"></p>
+            </div>
+        </div>
+
+        <div class="question-card" id="question5">
+            <div class="question-text">What is your experience with teamwork?</div>
+            <div class="recording-indicator" id="recordingIndicator5">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview5" controls></video>
+            </div>
+            <div class="timer" id="timer5"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording5">Start Recording</button>
+                <button class="btn-danger" id="stopRecording5" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion5" disabled>Next Question</button>
+            </div>
+            <div class="feedback" id="feedback5">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating5"></div>
+                <p id="feedbackText5"></p>
+            </div>
+        </div>
+
+        <div class="question-card" id="question6">
+            <div class="question-text">Why should we hire you?</div>
+            <div class="recording-indicator" id="recordingIndicator6">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview6" controls></video>
+            </div>
+            <div class="timer" id="timer6"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording6">Start Recording</button>
+                <button class="btn-danger" id="stopRecording6" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion6" disabled>Next Question</button>
+            </div>
+            <div class="feedback" id="feedback6">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating6"></div>
+                <p id="feedbackText6"></p>
+            </div>
+        </div>
+
+        <div class="question-card" id="question7">
+            <div class="question-text">How do you prioritize tasks?</div>
+            <div class="recording-indicator" id="recordingIndicator7">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview7" controls></video>
+            </div>
+            <div class="timer" id="timer7"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording7">Start Recording</button>
+                <button class="btn-danger" id="stopRecording7" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion7" disabled>Next Question</button>
+            </div>
+            <div class="feedback" id="feedback7">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating7"></div>
+                <p id="feedbackText7"></p>
+            </div>
+        </div>
+
+        <div class="question-card" id="question8">
+            <div class="question-text">What are your career goals?</div>
+            <div class="recording-indicator" id="recordingIndicator8">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview8" controls></video>
+            </div>
+            <div class="timer" id="timer8"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording8">Start Recording</button>
+                <button class="btn-danger" id="stopRecording8" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion8" disabled>Next Question</button>
+            </div>
+            <div class="feedback" id="feedback8">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating8"></div>
+                <p id="feedbackText8"></p>
+            </div>
+        </div>
+
+        <div class="question-card" id="question9">
+            <div class="question-text">Tell me about a challenge you faced and how you overcame it.</div>
+            <div class="recording-indicator" id="recordingIndicator9">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview9" controls></video>
+            </div>
+            <div class="timer" id="timer9"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording9">Start Recording</button>
+                <button class="btn-danger" id="stopRecording9" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion9" disabled>Next Question</button>
+            </div>
+            <div class="feedback" id="feedback9">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating9"></div>
+                <p id="feedbackText9"></p>
+            </div>
+        </div>
+
+        <div class="question-card" id="question10">
+            <div class="question-text">What excites you about this role or company?</div>
+            <div class="recording-indicator" id="recordingIndicator10">
+                <div class="recording-dot"></div>
+                <span>Recording</span>
+            </div>
+            <div class="video-container">
+                <video id="videoPreview10" controls></video>
+            </div>
+            <div class="timer" id="timer10"></div>
+            <div class="controls">
+                <button class="btn-primary" id="startRecording10">Start Recording</button>
+                <button class="btn-danger" id="stopRecording10" disabled>Stop Recording</button>
+                <button class="btn-secondary" id="nextQuestion10" disabled>Finish Interview</button>
+            </div>
+            <div class="feedback" id="feedback10">
+                <h3>Feedback</h3>
+                <div class="rating" id="rating10"></div>
+                <p id="feedbackText10"></p>
+            </div>
+        </div>
+
+        <div class="results-screen card" id="resultsScreen">
+            <h2>Interview Results</h2>
+            <div class="final-score" id="finalScore">Your Score: 0/5</div>
+            
+            <div id="resultsContainer"></div>
+            
+            <div class="improvement-tips">
+                <h3>Improvement Tips</h3>
+                <ul id="improvementTips">
+                    <!-- Tips will be added here -->
+                </ul>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-primary" id="restartBtn">Start New Interview</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const startScreen = document.getElementById('startScreen');
+            const welcomeCard = document.getElementById('welcomeCard');
+            const startBtn = document.getElementById('startBtn');
+            const nextWelcomeBtn = document.getElementById('nextWelcomeBtn');
+            const progressBar = document.getElementById('progressBar');
+            const resultsScreen = document.getElementById('resultsScreen');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const finalScore = document.getElementById('finalScore');
+            const improvementTips = document.getElementById('improvementTips');
+            const restartBtn = document.getElementById('restartBtn');
+            const themeToggle = document.getElementById('themeToggle');
+
+            // Questions array
+            const questions = [
+                "Tell me about yourself.",
+                "What are your biggest strengths?",
+                "Describe your favorite project and your role.",
+                "How do you handle failure?",
+                "What is your experience with teamwork?",
+                "Why should we hire you?",
+                "How do you prioritize tasks?",
+                "What are your career goals?",
+                "Tell me about a challenge you faced and how you overcame it.",
+                "What excites you about this role or company?"
+            ];
+
+            // State variables
+            let currentQuestion = 0;
+            let mediaRecorder;
+            let recordedChunks = [];
+            let videoStream;
+            let scores = [];
+            let feedbacks = [];
+            let recordedVideos = [];
+            let timers = [];
+            let timerIntervals = [];
+
+            // Initialize all question cards as inactive except welcome
+            document.querySelectorAll('.question-card').forEach((card, index) => {
+                if (index > 0) { // Skip welcome card (index 0)
+                    card.classList.remove('active');
+                }
+            });
+
+            // Event Listeners
+            startBtn.addEventListener('click', startInterview);
+            nextWelcomeBtn.addEventListener('click', () => showQuestion(0));
+            restartBtn.addEventListener('click', restartInterview);
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // Initialize recording buttons for each question
+            for (let i = 1; i <= 10; i++) {
+                const startBtn = document.getElementById(`startRecording${i}`);
+                const stopBtn = document.getElementById(`stopRecording${i}`);
+                const nextBtn = document.getElementById(`nextQuestion${i}`);
+                const videoPreview = document.getElementById(`videoPreview${i}`);
+                const recordingIndicator = document.getElementById(`recordingIndicator${i}`);
+                const timerElement = document.getElementById(`timer${i}`);
+
+                startBtn.addEventListener('click', () => startRecording(i));
+                stopBtn.addEventListener('click', () => stopRecording(i));
+                nextBtn.addEventListener('click', () => nextQuestion(i));
+                
+                // Store timer element reference
+                timers[i] = {
+                    element: timerElement,
+                    seconds: 0,
+                    interval: null
+                };
+            }
+
+            // Check for saved theme preference
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+
+            // Functions
+            function startInterview() {
+                startScreen.style.display = 'none';
+                welcomeCard.classList.add('active');
+                updateProgressBar(0);
+            }
+
+            function showQuestion(questionIndex) {
+                // Hide all question cards
+                document.querySelectorAll('.question-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+                
+                // Show the current question card
+                const questionCard = document.getElementById(`question${questionIndex + 1}`);
+                questionCard.classList.add('active');
+                
+                // Initialize webcam
+                initWebcam(questionIndex + 1);
+                
+                // Update progress bar
+                updateProgressBar((questionIndex + 1) * 10);
+            }
+
+            function initWebcam(questionNumber) {
+                const videoPreview = document.getElementById(`videoPreview${questionNumber}`);
+                
+                // Stop any existing stream
+                if (videoStream) {
+                    videoStream.getTracks().forEach(track => track.stop());
+                }
+                
+                // Reset video preview
+                videoPreview.src = '';
+                videoPreview.poster = '';
+                
+                // Get user media
+                navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+                    .then(stream => {
+                        videoStream = stream;
+                        videoPreview.srcObject = stream;
+                        videoPreview.muted = true;
+                        videoPreview.play();
+                    })
+                    .catch(err => {
+                        console.error("Error accessing media devices:", err);
+                        alert("Could not access camera/microphone. Please check permissions.");
+                    });
+            }
+
+            function startRecording(questionNumber) {
+                const videoPreview = document.getElementById(`videoPreview${questionNumber}`);
+                const startBtn = document.getElementById(`startRecording${questionNumber}`);
+                const stopBtn = document.getElementById(`stopRecording${questionNumber}`);
+                const recordingIndicator = document.getElementById(`recordingIndicator${questionNumber}`);
+                const timerElement = timers[questionNumber].element;
+                
+                // Reset timer
+                timers[questionNumber].seconds = 0;
+                timerElement.textContent = formatTime(0);
+                
+                // Start timer
+                timers[questionNumber].interval = setInterval(() => {
+                    timers[questionNumber].seconds++;
+                    timerElement.textContent = formatTime(timers[questionNumber].seconds);
+                }, 1000);
+
+                recordedChunks = [];
+                const options = { mimeType: 'video/webm' };
+                
+                try {
+                    mediaRecorder = new MediaRecorder(videoStream, options);
+                } catch (e) {
+                    console.error('Exception while creating MediaRecorder:', e);
+                    return;
+                }
+
+                mediaRecorder.ondataavailable = event => {
+                    if (event.data.size > 0) {
+                        recordedChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                    const videoURL = URL.createObjectURL(blob);
+                    videoPreview.src = videoURL;
+                    videoPreview.srcObject = null;
+                    videoPreview.muted = false;
+                    
+                    // Store the recorded video
+                    recordedVideos[questionNumber - 1] = {
+                        url: videoURL,
+                        blob: blob,
+                        duration: timers[questionNumber].seconds
+                    };
+                    
+                    // Provide feedback
+                    provideFeedback(questionNumber);
+                };
+
+                mediaRecorder.start(100); // Collect 100ms of data
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                recordingIndicator.style.display = 'flex';
+            }
+
+            function stopRecording(questionNumber) {
+                const startBtn = document.getElementById(`startRecording${questionNumber}`);
+                const stopBtn = document.getElementById(`stopRecording${questionNumber}`);
+                const nextBtn = document.getElementById(`nextQuestion${questionNumber}`);
+                const recordingIndicator = document.getElementById(`recordingIndicator${questionNumber}`);
+                
+                mediaRecorder.stop();
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                nextBtn.disabled = false;
+                recordingIndicator.style.display = 'none';
+                
+                // Stop timer
+                clearInterval(timers[questionNumber].interval);
+            }
+
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+
+            function nextQuestion(currentQuestionNumber) {
+                if (currentQuestionNumber < 10) {
+                    currentQuestion = currentQuestionNumber;
+                    showQuestion(currentQuestionNumber);
+                } else {
+                    // Interview completed, show results
+                    showResults();
+                }
+            }
+
+            function provideFeedback(questionNumber) {
+                const feedbackElement = document.getElementById(`feedback${questionNumber}`);
+                const ratingElement = document.getElementById(`rating${questionNumber}`);
+                const feedbackTextElement = document.getElementById(`feedbackText${questionNumber}`);
+                
+                // Generate random rating (3-5 for demo purposes)
+                const rating = Math.floor(Math.random() * 3) + 3;
+                scores.push(rating);
+                
+                // Generate feedback based on question and rating
+                const feedback = generateFeedback(questionNumber, rating);
+                feedbacks.push(feedback);
+                
+                // Display rating stars
+                ratingElement.innerHTML = '';
+                for (let i = 0; i < 5; i++) {
+                    const star = document.createElement('span');
+                    star.className = 'star';
+                    star.textContent = i < rating ? '★' : '☆';
+                    ratingElement.appendChild(star);
+                }
+                
+                // Display feedback text
+                feedbackTextElement.textContent = feedback;
+                
+                // Show feedback
+                feedbackElement.style.display = 'block';
+            }
+
+            function generateFeedback(questionNumber, rating) {
+                const question = questions[questionNumber - 1];
+                const duration = timers[questionNumber].seconds;
+                let feedback = '';
+                
+                if (rating >= 4) {
+                    feedback = "Great answer! ";
+                    if (duration < 30) {
+                        feedback += "You were concise but consider adding a bit more detail to strengthen your response.";
+                    } else if (duration > 90) {
+                        feedback += "Your answer was thorough but could be more concise to keep the interviewer engaged.";
+                    } else {
+                        feedback += "Your answer was well-balanced in terms of length and detail.";
+                    }
+                } else {
+                    feedback = "Good start, but there's room for improvement. ";
+                    if (duration < 20) {
+                        feedback += "Your answer was too brief. Try to expand with specific examples or details.";
+                    } else if (duration > 60) {
+                        feedback += "Your answer was too long. Practice being more concise while still covering key points.";
+                    }
+                    
+                    if (question.includes("yourself") || question.includes("strengths") || question.includes("hire you")) {
+                        feedback += " Focus more on how your skills align with the job requirements.";
+                    } else if (question.includes("project") || question.includes("challenge")) {
+                        feedback += " Use the STAR method (Situation, Task, Action, Result) to structure your answer more effectively.";
+                    } else if (question.includes("failure") || question.includes("teamwork")) {
+                        feedback += " Include more specific examples from your experience to make your answer more compelling.";
+                    }
+                }
+                
+                return feedback;
+            }
+
+            function showResults() {
+                // Hide all question cards
+                document.querySelectorAll('.question-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+                
+                // Calculate average score
+                const averageScore = (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);
+                finalScore.textContent = `Your Score: ${averageScore}/5`;
+                
+                // Build results HTML
+                let resultsHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    resultsHTML += `
+                        <div class="result-item">
+                            <div class="result-question">${i + 1}. ${questions[i]}</div>
+                            <div class="video-container">
+                                <video src="${recordedVideos[i].url}" controls></video>
+                            </div>
+                            <div class="rating">
+                                ${'★'.repeat(scores[i])}${'☆'.repeat(5 - scores[i])}
+                            </div>
+                            <div class="result-feedback">${feedbacks[i]}</div>
+                        </div>
+                    `;
+                }
+                resultsContainer.innerHTML = resultsHTML;
+                
+                // Generate improvement tips
+                generateImprovementTips(averageScore);
+                
+                // Show results screen
+                resultsScreen.style.display = 'block';
+                updateProgressBar(100);
+            }
+
+            function generateImprovementTips(averageScore) {
+                let tips = [];
+                
+                if (averageScore < 3) {
+                    tips = [
+                        "Practice your answers more to become more comfortable and confident.",
+                        "Use specific examples from your experience to support your answers.",
+                        "Structure your answers using the STAR method (Situation, Task, Action, Result) for behavioral questions.",
+                        "Research common interview questions for your industry and prepare responses.",
+                        "Record yourself answering questions and watch for areas to improve."
+                    ];
+                } else if (averageScore < 4) {
+                    tips = [
+                        "Continue practicing to make your answers more natural and fluid.",
+                        "Work on balancing detail with conciseness in your responses.",
+                        "Focus on connecting your skills and experiences to the job requirements.",
+                        "Pay attention to your body language and tone of voice in recordings.",
+                        "Prepare questions to ask the interviewer to show your interest."
+                    ];
+                } else {
+                    tips = [
+                        "Maintain your strong performance with regular practice.",
+                        "Consider refining your answers to make them even more impactful.",
+                        "Prepare for different interview formats (panel, technical, case interviews).",
+                        "Research each company thoroughly to tailor your answers.",
+                        "Continue developing your professional story and narrative."
+                    ];
+                }
+                
+                improvementTips.innerHTML = '';
+                tips.forEach(tip => {
+                    const li = document.createElement('li');
+                    li.textContent = tip;
+                    improvementTips.appendChild(li);
+                });
+            }
+
+            function restartInterview() {
+                // Reset state
+                currentQuestion = 0;
+                scores = [];
+                feedbacks = [];
+                recordedVideos = [];
+                
+                // Stop any media streams
+                if (videoStream) {
+                    videoStream.getTracks().forEach(track => track.stop());
+                }
+                
+                // Clear all timers
+                timers.forEach(timer => {
+                    if (timer.interval) clearInterval(timer.interval);
+                });
+                timers = [];
+                
+                // Reset UI
+                resultsScreen.style.display = 'none';
+                startScreen.style.display = 'flex';
+                updateProgressBar(0);
+                
+                // Reset all question cards
+                document.querySelectorAll('.question-card').forEach((card, index) => {
+                    if (index > 0) {
+                        card.classList.remove('active');
+                        const videoPreview = document.getElementById(`videoPreview${index}`);
+                        const feedback = document.getElementById(`feedback${index}`);
+                        const nextBtn = document.getElementById(`nextQuestion${index}`);
+                        
+                        videoPreview.src = '';
+                        videoPreview.srcObject = null;
+                        feedback.style.display = 'none';
+                        nextBtn.disabled = true;
+                    }
+                });
+                
+                // Reinitialize timers
+                for (let i = 1; i <= 10; i++) {
+                    timers[i] = {
+                        element: document.getElementById(`timer${i}`),
+                        seconds: 0,
+                        interval: null
+                    };
+                    timers[i].element.textContent = formatTime(0);
+                }
+            }
+
+            function updateProgressBar(percent) {
+                progressBar.style.width = `${percent}%`;
+            }
+
+            function toggleTheme() {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            }
+        });
+    </script>
+</body>
+</html>

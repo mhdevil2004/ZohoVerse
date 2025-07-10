@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataInsight AI Assistant</title>
+    <style>
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #34A853;
+            --accent-color: #EA4335;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #5f6368;
+            --white: #ffffff;
+        }
+        
+        body {
+            font-family: 'Google Sans', Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            color: #202124;
+        }
+        
+        .app-container {
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+        
+        .sidebar {
+            width: 100%;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--medium-gray);
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            order: 2;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .upload-section {
+            margin-bottom: 20px;
+        }
+        
+        .upload-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+        
+        .upload-btn:hover {
+            background-color: #3367d6;
+        }
+        
+        .file-info {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--dark-gray);
+        }
+        
+        .ml-concepts {
+            margin-top: 20px;
+        }
+        
+        .concept-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark-gray);
+        }
+        
+        .concept-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .concept-tag {
+            padding: 5px 10px;
+            background-color: var(--light-gray);
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .concept-tag:hover {
+            background-color: var(--medium-gray);
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            order: 1;
+        }
+        
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--medium-gray);
+            background-color: var(--white);
+        }
+        
+        .chat-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 90%;
+        }
+        
+        .user-message {
+            margin-left: auto;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 18px 18px 4px 18px;
+        }
+        
+        .ai-message {
+            margin-right: auto;
+            background-color: var(--white);
+            padding: 10px 14px;
+            border-radius: 18px 18px 18px 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .analysis-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        
+        .section-title {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        
+        .data-table th, .data-table td {
+            border: 1px solid var(--medium-gray);
+            padding: 6px 10px;
+            text-align: left;
+        }
+        
+        .data-table th {
+            background-color: var(--light-gray);
+        }
+        
+        .input-area {
+            padding: 15px;
+            border-top: 1px solid var(--medium-gray);
+            background-color: var(--white);
+        }
+        
+        .input-container {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 24px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .message-input:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .send-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .send-btn:hover {
+            background-color: #3367d6;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 12px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .download-btn:hover {
+            background-color: #2d9249;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .api-key-input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .download-options {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        /* Desktop styles */
+        @media (min-width: 768px) {
+            .app-container {
+                flex-direction: row;
+                height: 100vh;
+            }
+            
+            .sidebar {
+                width: 280px;
+                height: 100%;
+                border-right: 1px solid var(--medium-gray);
+                border-bottom: none;
+                order: 1;
+            }
+            
+            .main-content {
+                order: 2;
+            }
+            
+            .message {
+                max-width: 80%;
+            }
+            
+            .upload-btn {
+                padding: 12px;
+            }
+            
+            .chat-header {
+                padding: 20px;
+            }
+            
+            .chat-title {
+                font-size: 18px;
+            }
+            
+            .chat-messages {
+                padding: 20px;
+            }
+            
+            .input-area {
+                padding: 20px;
+            }
+            
+            .message-input {
+                padding: 12px 16px;
+            }
+            
+            .send-btn {
+                width: 48px;
+                height: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">📊</span>
+                <span class="logo-text">ZohoVerse AI</span>
+            </div>
+            
+            <div class="upload-section">
+                <button class="upload-btn">Upload Dataset</button>
+                <div class="file-info">
+                    Supported formats: CSV, Excel, JSON (max 10MB)
+                </div>
+            </div>
+            
+            <div class="ml-concepts">
+                <div class="concept-title">MACHINE LEARNING CONCEPTS</div>
+                <div class="concept-tags">
+                    <div class="concept-tag" onclick="insertPrompt('Perform regression analysis')">Regression</div>
+                    <div class="concept-tag" onclick="insertPrompt('Classify this data')">Classification</div>
+                    <div class="concept-tag" onclick="insertPrompt('Cluster similar items')">Clustering</div>
+                    <div class="concept-tag" onclick="insertPrompt('Build decision tree')">Decision Tree</div>
+                    <div class="concept-tag" onclick="insertPrompt('Find outliers')">Outliers</div>
+                    <div class="concept-tag" onclick="insertPrompt('Show summary statistics')">Statistics</div>
+                </div>
+            </div>
+            
+            <input type="text" class="api-key-input" id="api-key" placeholder="Enter API key (simulated)">
+        </div>
+        
+        <div class="main-content">
+            <div class="chat-header">
+                <div class="chat-title">Data Analysis Chat</div>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="message ai-message">
+                    Welcome to DataInsight AI Assistant! Please upload your dataset and ask questions about your data.
+                    <div class="analysis-section">
+                        <div class="section-title">Try asking:</div>
+                        <ul>
+                            <li>"Show summary statistics"</li>
+                            <li>"Find average salary by job role"</li>
+                            <li>"Identify outliers in the data"</li>
+                            <li>"What columns are available?"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-area">
+                <div class="input-container">
+                    <input type="text" class="message-input" id="message-input" placeholder="Ask about your data...">
+                    <button class="send-btn" id="send-btn">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const chatMessages = document.getElementById('chat-messages');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const apiKeyInput = document.getElementById('api-key');
+        
+        // Sample dataset for demonstration
+        const sampleData = [
+            { id: 1, name: "John Doe", age: 32, salary: 85000, role: "Developer", department: "IT" },
+            { id: 2, name: "Jane Smith", age: 28, salary: 78000, role: "Developer", department: "IT" },
+            { id: 3, name: "Mike Johnson", age: 45, salary: 120000, role: "Manager", department: "HR" },
+            { id: 4, name: "Sarah Williams", age: 35, salary: 95000, role: "Manager", department: "IT" },
+            { id: 5, name: "David Brown", age: 29, salary: 68000, role: "Analyst", department: "Finance" },
+            { id: 6, name: "Emily Davis", age: 31, salary: 72000, role: "Analyst", department: "Finance" },
+            { id: 7, name: "Robert Wilson", age: 42, salary: 110000, role: "Manager", department: "Finance" },
+            { id: 8, name: "Lisa Miller", age: 27, salary: 215000, role: "Developer", department: "IT" }, // Outlier
+            { id: 9, name: "James Taylor", age: 38, salary: 90000, role: "Developer", department: "IT" },
+            { id: 10, name: "Jennifer Anderson", age: 33, salary: 28500, role: "Analyst", department: "Finance" } // Outlier
+        ];
+        
+        // Initialize with sample data
+        window.currentDataset = sampleData;
+        
+        // File upload handling
+        document.querySelector('.upload-btn').addEventListener('click', function() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.csv,.xlsx,.json';
+            
+            fileInput.onchange = e => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                if (file.size > 10 * 1024 * 1024) {
+                    addMessage('File too large (max 10MB)', 'ai');
+                    return;
+                }
+                
+                // Process the file based on type
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    let dataset;
+                    
+                    if (file.name.endsWith('.csv')) {
+                        dataset = parseCSV(content);
+                    } else if (file.name.endsWith('.json')) {
+                        try {
+                            dataset = JSON.parse(content);
+                        } catch (error) {
+                            addMessage('Error parsing JSON file. Please check the format.', 'ai');
+                            return;
+                        }
+                    } else if (file.name.endsWith('.xlsx')) {
+                        addMessage('Excel file support requires additional libraries in a real implementation. Using sample data instead.', 'ai');
+                        dataset = sampleData;
+                    }
+                    
+                    // Store dataset and update UI
+                    if (dataset && dataset.length > 0) {
+                        window.currentDataset = dataset;
+                        addMessage(`Dataset loaded: ${file.name} (${dataset.length} records)`, 'ai');
+                        showDatasetPreview(dataset);
+                    } else {
+                        addMessage('No valid data found in the file. Using sample data instead.', 'ai');
+                        window.currentDataset = sampleData;
+                        showDatasetPreview(sampleData);
+                    }
+                };
+                
+                if (file.name.endsWith('.csv') || file.name.endsWith('.json')) {
+                    reader.readAsText(file);
+                } else {
+                    reader.readAsBinaryString(file);
+                }
+            };
+            
+            fileInput.click();
+        });
+        
+        // Basic CSV parsing
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+            if (lines.length < 2) return null;
+            
+            const headers = lines[0].split(',').map(h => h.trim());
+            
+            return lines.slice(1).map(line => {
+                const values = line.split(',');
+                return headers.reduce((obj, header, i) => {
+                    obj[header] = values[i] ? values[i].trim() : null;
+                    return obj;
+                }, {});
+            });
+        }
+        
+        // Show a preview of the dataset
+        function showDatasetPreview(dataset) {
+            const previewCount = Math.min(5, dataset.length);
+            const preview = dataset.slice(0, previewCount);
+            
+            let html = `<div class="analysis-section">
+                <div class="section-title">Dataset Preview (first ${previewCount} rows)</div>
+                <table class="data-table">
+                    <tr>`;
+            
+            // Create headers
+            Object.keys(preview[0]).forEach(key => {
+                html += `<th>${key}</th>`;
+            });
+            html += `</tr>`;
+            
+            // Create rows
+            preview.forEach(row => {
+                html += `<tr>`;
+                Object.values(row).forEach(value => {
+                    html += `<td>${value !== null ? value : 'null'}</td>`;
+                });
+                html += `</tr>`;
+            });
+            
+            html += `</table>
+                <div class="download-options">
+                    <a href="#" class="download-btn" onclick="downloadData('${JSON.stringify(dataset).replace(/'/g, "\\'")}', 'dataset_preview.json', 'json')">Download JSON</a>
+                    <a href="#" class="download-btn" onclick="downloadData(convertToCSV(dataset), 'dataset_preview.csv', 'csv')">Download CSV</a>
+                </div>
+            </div>`;
+            
+            addMessage(html, 'ai', true);
+        }
+        
+        // Chat message handling
+        sendBtn.addEventListener('click', processQuery);
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') processQuery();
+        });
+        
+        function processQuery() {
+            const query = messageInput.value.trim();
+            if (!query) return;
+            
+            addMessage(query, 'user');
+            messageInput.value = '';
+            
+            // Show loading indicator
+            const loadingMsg = addMessage('<div class="loading"></div> Analyzing your query...', 'ai', true);
+            
+            // Analyze based on query
+            if (!window.currentDataset) {
+                setTimeout(() => {
+                    loadingMsg.remove();
+                    addMessage('Please upload a dataset first.', 'ai');
+                }, 1000);
+                return;
+            }
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                loadingMsg.remove();
+                
+                // Check if API key is provided (simulated check)
+                const apiKey = apiKeyInput.value.trim();
+                if (!apiKey) {
+                    addMessage('Please enter an API key for advanced analysis. Using basic analysis for now.', 'ai');
+                }
+                
+                const response = analyzeData(query, window.currentDataset, apiKey);
+                addMessage(response, 'ai', true);
+            }, 1500);
+        }
+        
+        function addMessage(content, sender = 'ai', isHTML = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            if (isHTML) {
+                messageDiv.innerHTML = content;
+            } else {
+                messageDiv.textContent = content;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return messageDiv;
+        }
+        
+        // Insert prompt when clicking concept tags
+        function insertPrompt(prompt) {
+            messageInput.value = prompt;
+            messageInput.focus();
+        }
+        
+        // Core analysis function with simulated API integration
+        function analyzeData(query, dataset, apiKey = '') {
+            // Convert query to lowercase for easier matching
+            const queryLower = query.toLowerCase();
+            
+            // Basic analysis examples
+            if (queryLower.includes('average') && queryLower.includes('salary') && (queryLower.includes('job role') || queryLower.includes('role'))) {
+                return analyzeSalaryByRole(dataset);
+            }
+            
+            if (queryLower.includes('outlier') && (queryLower.includes('salary') || queryLower.includes('data'))) {
+                return findOutliers(dataset, 'salary');
+            }
+            
+            if (queryLower.includes('summary') || queryLower.includes('statistics')) {
+                return showSummaryStatistics(dataset);
+            }
+            
+            if (queryLower.includes('columns') || queryLower.includes('fields') || queryLower.includes('variables')) {
+                return showDatasetColumns(dataset);
+            }
+            
+            if (queryLower.includes('regression') || queryLower.includes('predict')) {
+                return performRegressionAnalysis(dataset, apiKey);
+            }
+            
+            if (queryLower.includes('classify') || queryLower.includes('category')) {
+                return performClassification(dataset, apiKey);
+            }
+            
+            if (queryLower.includes('cluster') || queryLower.includes('group')) {
+                return performClustering(dataset, apiKey);
+            }
+            
+            // If we have an API key, try to use the "AI" for more advanced analysis
+            if (apiKey) {
+                return simulateAIResponse(query, dataset);
+            }
+            
+            // Default response
+            return `I analyzed your dataset with ${dataset.length} records. For more specific insights, try asking about:
+            <ul>
+                <li>"Show summary statistics"</li>
+                <li>"Find average salary by job role"</li>
+                <li>"Identify outliers in the data"</li>
+                <li>"Perform regression analysis"</li>
+                <li>"Classify this data"</li>
+            </ul>`;
+        }
+        
+        function analyzeSalaryByRole(dataset) {
+            // Check if required fields exist
+            if (!dataset[0].salary || !dataset[0].role) {
+                return 'Dataset does not contain salary and role information.';
+            }
+            
+            // Group by role
+            const roles = {};
+            dataset.forEach(record => {
+                if (!roles[record.role]) {
+                    roles[record.role] = {
+                        sum: 0,
+                        count: 0,
+                        min: Infinity,
+                        max: -Infinity
+                    };
+                }
+                const salary = parseFloat(record.salary) || 0;
+                roles[record.role].sum += salary;
+                roles[record.role].count++;
+                roles[record.role].min = Math.min(roles[record.role].min, salary);
+                roles[record.role].max = Math.max(roles[record.role].max, salary);
+            });
+            
+            // Calculate averages
+            const results = Object.keys(roles).map(role => ({
+                role,
+                average: (roles[role].sum / roles[role].count).toFixed(2),
+                min: roles[role].min.toFixed(2),
+                max: roles[role].max.toFixed(2),
+                count: roles[role].count
+            }));
+            
+            // Format response
+            let response = `<strong>Salary Analysis by Job Role</strong>
+                <div class="analysis-section">
+                    <div class="section-title">Salary Statistics by Role</div>
+                    <table class="data-table">
+                        <tr>
+                            <th>Job Role</th>
+                            <th>Average Salary</th>
+                            <th>Min Salary</th>
+                            <th>Max Salary</th>
+                            <th>Employees</th>
+                        </tr>`;
+            
+            results.forEach(r => {
+                response += `<tr>
+                    <td>${r.role}</td>
+                    <td>$${r.average}</td>
+                    <td>$${r.min}</td>
+                    <td>$${r.max}</td>
+                    <td>${r.count}</td>
+                </tr>`;
+            });
+            
+            response += `</table>
+                <div class="download-options">
+                    <a href="#" class="download-btn" onclick="downloadData('${JSON.stringify(results).replace(/'/g, "\\'")}', 'salary_analysis.json', 'json')">Download JSON</a>
+                    <a href="#" class="download-btn" onclick="downloadData(convertToCSV(results), 'salary_analysis.csv', 'csv')">Download CSV</a>
+                </div>
+            </div>`;
+            
+            return response;
+        }
+        
+        function findOutliers(dataset, field = 'salary') {
+            if (!dataset[0][field]) {
+                return `Field "${field}" not found in dataset.`;
+            }
+            
+            // Calculate mean and standard deviation
+            const values = dataset.map(d => parseFloat(d[field])).filter(v => !isNaN(v));
+            const mean = values.reduce((a, b) => a + b, 0) / values.length;
+            const stdDev = Math.sqrt(
+                values.map(v => Math.pow(v - mean, 2)).reduce((a, b) => a + b, 0) / values.length
+            );
+            
+            // Find outliers (2 standard deviations from mean)
+            const outliers = dataset.filter(d => {
+                const val = parseFloat(d[field]);
+                return !isNaN(val) && Math.abs(val - mean) > 2 * stdDev;
+            });
+            
+            // Format response
+            let response = `<strong>Outlier Detection in ${field}</strong>
+                <div class="analysis-section">
+                    <div class="section-title">Outlier Analysis</div>
+                    <p>Mean: $${mean.toFixed(2)}, Standard Deviation: $${stdDev.toFixed(2)}</p>
+                    <p>Found ${outliers.length} outliers (more than 2 standard deviations from mean):</p>
+                    <table class="data-table">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>${field.charAt(0).toUpperCase() + field.slice(1)}</th>
+                            <th>Deviation</th>
+                        </tr>`;
+            
+            outliers.forEach(o => {
+                const val = parseFloat(o[field]);
+                const deviation = ((val - mean) / stdDev).toFixed(2);
+                response += `<tr>
+                    <td>${o.id || 'N/A'}</td>
+                    <td>${o.name || 'N/A'}</td>
+                    <td>${o.role || 'N/A'}</td>
+                    <td>$${val}</td>
+                    <td>${deviation}σ</td>
+                </tr>`;
+            });
+            
+            response += `</table>
+                <div class="download-options">
+                    <a href="#" class="download-btn" onclick="downloadData('${JSON.stringify(outliers).replace(/'/g, "\\'")}', 'outliers_analysis.json', 'json')">Download JSON</a>
+                    <a href="#" class="download-btn" onclick="downloadData(convertToCSV(outliers), 'outliers_analysis.csv', 'csv')">Download CSV</a>
+                </div>
+            </div>`;
+            
+            return response;
+        }
+        
+        function showSummaryStatistics(dataset) {
+            if (dataset.length === 0) return 'Dataset is empty.';
+            
+            // Get all numeric fields
+            const numericFields = {};
+            Object.keys(dataset[0]).forEach(key => {
+                if (!isNaN(parseFloat(dataset[0][key]))) {
+                    numericFields[key] = true;
+                }
+            });
+            
+            // Calculate stats for each numeric field
+            const stats = {};
+            Object.keys(numericFields).forEach(field => {
+                const values = dataset.map(d => parseFloat(d[field])).filter(v => !isNaN(v));
+                if (values.length === 0) return;
+                
+                const sum = values.reduce((a, b) => a + b, 0);
+                const mean = sum / values.length;
+                const min = Math.min(...values);
+                const max = Math.max(...values);
+                const stdDev = Math.sqrt(
+                    values.map(v => Math.pow(v - mean, 2)).reduce((a, b) => a + b, 0) / values.length
+                );
+                
+                stats[field] = {
+                    mean: mean.toFixed(2),
+                    min: min.toFixed(2),
+                    max: max.toFixed(2),
+                    stdDev: stdDev.toFixed(2),
+                    count: values.length
+                };
+            });
+            
+            // Format response
+            let response = `<strong>Summary Statistics</strong>
+                <div class="analysis-section">
+                    <div class="section-title">Numeric Field Statistics</div>
+                    <table class="data-table">
+                        <tr>
+                            <th>Field</th>
+                            <th>Mean</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                            <th>Std Dev</th>
+                            <th>Count</th>
+                        </tr>`;
+            
+            Object.keys(stats).forEach(field => {
+                response += `<tr>
+                    <td>${field}</td>
+                    <td>${stats[field].mean}</td>
+                    <td>${stats[field].min}</td>
+                    <td>${stats[field].max}</td>
+                    <td>${stats[field].stdDev}</td>
+                    <td>${stats[field].count}</td>
+                </tr>`;
+            });
+            
+            response += `</table>`;
+            
+            // Add non-numeric field info
+            const nonNumericFields = Object.keys(dataset[0]).filter(key => !numericFields[key]);
+            if (nonNumericFields.length > 0) {
+                response += `<div class="section-title">Non-Numeric Fields</div>
+                    <p>${nonNumericFields.join(', ')}</p>`;
+            }
+            
+            response += `<div class="download-options">
+                    <a href="#" class="download-btn" onclick="downloadData('${JSON.stringify(stats).replace(/'/g, "\\'")}', 'summary_statistics.json', 'json')">Download JSON</a>
+                    <a href="#" class="download-btn" onclick="downloadData(convertStatsToCSV(stats), 'summary_statistics.csv', 'csv')">Download CSV</a>
+                </div>
+            </div>`;
+            
+            return response;
+        }
+        
+        function showDatasetColumns(dataset) {
+            if (dataset.length === 0) return 'Dataset is empty.';
+            
+            const columns = Object.keys(dataset[0]);
+            
+            let response = `<strong>Dataset Columns</strong>
+                <div class="analysis-section">
+                    <div class="section-title">Available Fields (${columns.length})</div>
+                    <ul>`;
+            
+            columns.forEach(col => {
+                response += `<li>${col}</li>`;
+            });
+            
+            response += `</ul>
+                <div class="download-options">
+                    <a href="#" class="download-btn" onclick="downloadData('${JSON.stringify(columns).replace(/'/g, "\\'")}', 'dataset_columns.json', 'json')">Download JSON</a>
+                </div>
+            </div>`;
+            
+            return response;
+        }
+        
+        // Simulated AI-powered analysis
+        function simulateAIResponse(query, dataset) {
+            // Generate a timestamp for the report
+            const timestamp = new Date().toISOString();
+            
+            // Create a comprehensive report object
+            const report = {
+                query: query,
+                timestamp: timestamp,
+                datasetInfo: {
+                    recordCount: dataset.length,
+                    fields: Object.keys(dataset[0]),
+                    sampleRecord: dataset[0]
+                },
+                insights: [
+                    "The dataset contains information about " + dataset.filter(d => d.name).length + " individuals",
+                    "There appears to be a positive correlation between age and salary in this dataset",
+                    "The IT department has the highest average salary among departments",
+                    "Two significant outliers were detected in the salary data"
+                ],
+                recommendations: [
+                    "Consider normalizing salary data before further analysis",
+                    "Department could be a strong predictor for classification tasks",
+                    "Age and salary relationship might be worth exploring with linear regression"
+                ],
+                generatedBy: "DataInsight AI"
+            };
+            
+            // Format response
+            return `<strong>AI Analysis</strong>
+                <div class="analysis-section">
+                    <div class="section-title">Insights from your query: "${query}"</div>
+                    <p>Based on analyzing ${dataset.length} records, here are the key insights:</p>
+                    <ul>
+                        ${report.insights.map(i => `<li>${i}</li>`).join('')}
+                    </ul>
+                    <p>Recommendations:</p>
+                    <ol>
+                        ${report.recommendations.map(r => `<li>${r}</li>`).join('')}
+                    </ol>
+                </div>
+                <div class="download-options">
+                    <a href="#" class="download-btn" onclick="downloadData('${JSON.stringify(report).replace(/'/g, "\\'")}', 'ai_analysis_report.json', 'json')">Download Full Report (JSON)</a>
+                    <a href="#" class="download-btn" onclick="downloadData(generateTextReport(report), 'ai_analysis_report.txt', 'text')">Download Text Report</a>
+                </div>`;
+        }
+        
+        // Simulated ML functions
+        function performRegressionAnalysis(dataset, apiKey) {
+            if (!apiKey) {
+                return `Basic regression analysis requires an API key. Here's what we can determine without it:
+                <div class="analysis-section">
+                    <p>The dataset ${dataset[0].salary && dataset[0].age ? 'contains salary and age data which could be used for simple linear regression' : 'does not have obvious numeric fields for regression'}</p>
+                    ${dataset[0].salary && dataset[0].age ? '<p>Try asking: "Show correlation between age and salary"</p>' : ''}
+                </div>`;
+            }
+            
+            return simulateAIResponse('Perform regression analysis on this dataset', dataset);
+        }
+        
+        function performClassification(dataset, apiKey) {
+            if (!apiKey) {
+                return `Basic classification requires an API key. Here's what we can determine without it:
+                <div class="analysis-section">
+                    <p>The dataset ${dataset[0].department ? 'contains department information which could be used as a class label' : 'does not have obvious categorical fields for classification'}</p>
+                    ${dataset[0].department ? '<p>Potential features for classification: age, salary</p>' : ''}
+                </div>`;
+            }
+            
+            return simulateAIResponse('Perform classification on this dataset', dataset);
+        }
+        
+        function performClustering(dataset, apiKey) {
+            if (!apiKey) {
+                return `Basic clustering requires an API key. Here's what we can determine without it:
+                <div class="analysis-section">
+                    <p>The dataset has ${Object.keys(dataset[0]).length} features that could be used for clustering</p>
+                    <p>Potential clustering features: ${dataset[0].salary ? 'salary, ' : ''}${dataset[0].age ? 'age' : ''}</p>
+                </div>`;
+            }
+            
+            return simulateAIResponse('Perform clustering on this dataset', dataset);
+        }
+        
+        // Download functions
+        function downloadData(data, filename, type) {
+            const blob = type === 'json' 
+                ? new Blob([data], { type: 'application/json' })
+                : type === 'csv'
+                ? new Blob([data], { type: 'text/csv' })
+                : new Blob([data], { type: 'text/plain' });
+            
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        function convertToCSV(data) {
+            if (!data || data.length === 0) return '';
+            
+            const headers = Object.keys(data[0]);
+            let csv = headers.join(',') + '\n';
+            
+            data.forEach(row => {
+                const values = headers.map(header => {
+                    const value = row[header];
+                    return typeof value === 'string' ? `"${value.replace(/"/g, '""')}"` : value;
+                });
+                csv += values.join(',') + '\n';
+            });
+            
+            return csv;
+        }
+        
+        function convertStatsToCSV(stats) {
+            if (!stats) return '';
+            
+            const headers = ['Field', 'Mean', 'Min', 'Max', 'Std Dev', 'Count'];
+            let csv = headers.join(',') + '\n';
+            
+            Object.keys(stats).forEach(field => {
+                csv += [
+                    field,
+                    stats[field].mean,
+                    stats[field].min,
+                    stats[field].max,
+                    stats[field].stdDev,
+                    stats[field].count
+                ].join(',') + '\n';
+            });
+            
+            return csv;
+        }
+        
+        function generateTextReport(report) {
+            let text = `DataInsight AI Analysis Report\n`;
+            text += `Generated on: ${report.timestamp}\n\n`;
+            text += `Query: ${report.query}\n\n`;
+            text += `Dataset Information:\n`;
+            text += `- Records: ${report.datasetInfo.recordCount}\n`;
+            text += `- Fields: ${report.datasetInfo.fields.join(', ')}\n\n`;
+            text += `Key Insights:\n`;
+            report.insights.forEach((insight, i) => {
+                text += `${i+1}. ${insight}\n`;
+            });
+            text += `\nRecommendations:\n`;
+            report.recommendations.forEach((rec, i) => {
+                text += `${i+1}. ${rec}\n`;
+            });
+            text += `\nGenerated by ${report.generatedBy}`;
+            
+            return text;
+        }
+        
+        // Make functions available globally for download buttons
+        window.downloadData = downloadData;
+        window.convertToCSV = convertToCSV;
+        window.convertStatsToCSV = convertStatsToCSV;
+        window.generateTextReport = generateTextReport;
+    </script>
+</body>
+</html>

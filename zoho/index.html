@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZohoQuest | Zoho Career Pathways</title>
+    <meta name="description" content="Discover Zoho's unique education-to-career pathways through Zoho School of Technology and direct hiring processes.">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Base Styles */
+        :root {
+            --zoho-blue: #2A5CAA;
+            --zoho-dark-blue: #1E4275;
+            --zoho-light-blue: #E8F0FE;
+            --zoho-green: #00A651;
+            --zoho-orange: #F37021;
+            --dark-color: #1E293B;
+            --dark-gray: #334155;
+            --medium-gray: #64748B;
+            --light-gray: #E2E8F0;
+            --extra-light: #F8FAFC;
+            --white: #FFFFFF;
+            --black: #000000;
+            
+            --font-primary: 'Inter', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+            
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.1);
+            
+            --radius-sm: 4px;
+            --radius: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-secondary);
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--zoho-dark-blue);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--zoho-orange);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--medium-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.75rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            font-family: var(--font-secondary);
+        }
+
+        .btn-primary {
+            background-color: var(--zoho-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--zoho-dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--zoho-blue);
+            border-color: var(--zoho-blue);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--zoho-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-lg {
+            padding: 1rem 2.25rem;
+            font-size: 1.125rem;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .img-fluid {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            transition: var(--transition);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--zoho-blue);
+            margin-left: 0.5rem;
+        }
+
+        .logo h2 span {
+            color: var(--zoho-orange);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-list {
+            display: flex;
+            margin-right: 2rem;
+        }
+
+        .nav-item {
+            margin: 0 1rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            color: var(--dark-gray);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--zoho-blue);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--zoho-blue);
+            font-weight: 600;
+        }
+
+        .nav-cta .btn {
+            margin-left: 1rem;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--dark-color);
+            transition: var(--transition);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 6rem;
+            background: linear-gradient(135deg, var(--zoho-light-blue) 0%, rgba(42, 92, 170, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(42, 92, 170, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            padding-right: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            color: var(--zoho-dark-blue);
+        }
+
+        .hero h1 span {
+            color: var(--zoho-orange);
+        }
+
+        .hero .lead {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--dark-gray);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-image img {
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            transform: perspective(1000px) rotateY(-10deg);
+            transition: var(--transition);
+        }
+
+        .hero-image:hover img {
+            transform: perspective(1000px) rotateY(-5deg);
+        }
+
+        /* About Zoho Section */
+        .about-zoho {
+            background-color: var(--extra-light);
+            position: relative;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .about-card {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .about-card-header {
+            background-color: var(--zoho-blue);
+            color: var(--white);
+            padding: 1.5rem;
+        }
+
+        .about-card-header h3 {
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .about-card-body {
+            padding: 1.5rem;
+        }
+
+        .about-card-body ul {
+            margin-top: 1rem;
+        }
+
+        .about-card-body li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .about-card-body li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--zoho-blue);
+            font-weight: bold;
+        }
+
+        /* Hiring Process Section */
+        .hiring-process {
+            background-color: var(--white);
+        }
+
+        .process-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: var(--zoho-blue);
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 100%;
+        }
+
+        .process-step:nth-child(odd) {
+            padding-right: calc(50% + 2rem);
+            text-align: right;
+        }
+
+        .process-step:nth-child(even) {
+            padding-left: calc(50% + 2rem);
+            text-align: left;
+        }
+
+        .step-content {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: var(--zoho-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .process-step:nth-child(odd) .step-number {
+            right: -25px;
+        }
+
+        .process-step:nth-child(even) .step-number {
+            left: -25px;
+        }
+
+        .step-content h3 {
+            margin-bottom: 0.75rem;
+            color: var(--zoho-blue);
+        }
+
+        .step-content ul {
+            margin-top: 1rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+
+        .step-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--zoho-orange);
+        }
+
+        /* Zoho School Section */
+        .zoho-school {
+            background-color: var(--extra-light);
+        }
+
+        .school-container {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .school-content {
+            flex: 1;
+        }
+
+        .school-image {
+            flex: 1;
+        }
+
+        .school-image img {
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .curriculum-list {
+            margin-top: 2rem;
+        }
+
+        .curriculum-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .curriculum-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+        }
+
+        .curriculum-header h4 {
+            margin-left: 1rem;
+            color: var(--zoho-blue);
+        }
+
+        .curriculum-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--zoho-light-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--zoho-blue);
+            font-size: 1.25rem;
+        }
+
+        .curriculum-details {
+            padding-left: 3rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .curriculum-details.show {
+            max-height: 500px;
+        }
+
+        .curriculum-details ul {
+            margin-top: 0.75rem;
+        }
+
+        .curriculum-details li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+
+        .curriculum-details li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--zoho-orange);
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--white);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info {
+            background-color: var(--extra-light);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            color: var(--zoho-blue);
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--zoho-light-blue);
+            color: var(--zoho-blue);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .info-text h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .info-text p {
+            color: var(--medium-gray);
+        }
+
+        .contact-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .contact-social a {
+            width: 40px;
+            height: 40px;
+            background-color: var(--zoho-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .contact-social a:hover {
+            background-color: var(--zoho-dark-blue);
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--zoho-blue);
+            box-shadow: 0 0 0 3px rgba(42, 92, 170, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--zoho-dark-blue);
+            color: var(--light-gray);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col ul li a {
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--zoho-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--zoho-dark-blue);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .school-container {
+                flex-direction: column;
+            }
+            
+            .school-content {
+                order: 2;
+            }
+            
+            .school-image {
+                order: 1;
+                margin-bottom: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                box-shadow: var(--shadow);
+                transition: var(--transition);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                margin-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .nav-item {
+                margin: 0.5rem 0;
+            }
+            
+            .nav-cta {
+                margin-top: 1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero .container {
+                flex-direction: column;
+            }
+            
+            .hero-content {
+                margin-bottom: 3rem;
+                padding-right: 0;
+                text-align: center;
+            }
+            
+            .hero-cta {
+                justify-content: center;
+            }
+            
+            .process-timeline::before {
+                left: 30px;
+            }
+            
+            .process-step:nth-child(odd),
+            .process-step:nth-child(even) {
+                padding-left: 80px;
+                padding-right: 0;
+                text-align: left;
+            }
+            
+            .process-step:nth-child(odd) .step-number,
+            .process-step:nth-child(even) .step-number {
+                left: 5px;
+                right: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.75rem;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+            }
+            
+            .btn-lg {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Animation Classes */
+        [data-aos="fade-up"] {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        [data-aos="fade-up"].aos-animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        [data-aos="fade-down"] {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.6s ease;
+        }
+
+        [data-aos="fade-down"].aos-animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        [data-aos="fade-left"] {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.6s ease;
+        }
+
+        [data-aos="fade-left"].aos-animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        [data-aos="fade-right"] {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+
+        [data-aos="fade-right"].aos-animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        [data-aos="zoom-in"] {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.6s ease;
+        }
+
+        [data-aos="zoom-in"].aos-animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                   
+                    <h2>Zoho<span>Quest</span></h2>
+                </a>
+                
+                <div class="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#about" class="nav-link active">About Zoho</a></li>
+                        <li class="nav-item"><a href="#hiring" class="nav-link">Hiring Process</a></li>
+                        <li class="nav-item"><a href="#school" class="nav-link">Zoho School</a></li>
+                        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                    </ul>
+                    
+                    <div class="nav-cta">
+                        <a href="#school" class="btn btn-outline">Apply Now</a>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-right">
+                <h1>Build Your Career at <span>Zoho</span></h1>
+                <p class="lead">Discover Zoho's unique education-to-career pathways through Zoho School of Technology and direct hiring processes.</p>
+                <div class="hero-cta">
+                    <a href="#school" class="btn btn-primary btn-lg">Explore Zoho School</a>
+                    <a href="#hiring" class="btn btn-outline btn-lg">View Hiring Process</a>
+                </div>
+            </div>
+            <div class="hero-image" data-aos="fade-left">
+                <img src="zoho1.jpeg" alt="Zoho Campus">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Zoho Section -->
+    <section id="about" class="about-zoho">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>About Zoho</h2>
+                <p>Discover Zoho's unique culture, values, and community that make it one of the most innovative companies to work for</p>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-card" data-aos="fade-up">
+                    <div class="about-card-header">
+                        <h3>Zoho Work Culture</h3>
+                        <p>Simple living, deep thinking</p>
+                    </div>
+                    <div class="about-card-body">
+                        <p>Zoho focuses on value creation over valuation with a strong anti-hype, anti-VC stance. Engineering-driven with 90% of leadership coming from engineering teams.</p>
+                        <ul>
+                            <li>No dress code, flexible hours</li>
+                            <li>No forced hierarchy - even interns talk to CEOs</li>
+                            <li>100% product-focused company - no outsourcing</li>
+                            <li>Employees stay >10 years on average</li>
+                            <li>Free food, gym, libraries at offices</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="about-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="about-card-header">
+                        <h3>Village Offices</h3>
+                        <p>Rural revival initiative</p>
+                    </div>
+                    <div class="about-card-body">
+                        <p>Zoho started the "rural revival" initiative by opening offices in villages like Tenkasi (Tamil Nadu) to bring high-tech jobs to rural India.</p>
+                        <ul>
+                            <li>Proves world-class tech can be built from anywhere</li>
+                            <li>Reduces urban migration pressure</li>
+                            <li>Preserves local culture while providing opportunities</li>
+                            <li>Employees enjoy better quality of life with lower costs</li>
+                            <li>Helps develop local economies</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="about-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="about-card-header">
+                        <h3>Zoho Community</h3>
+                        <p>Global user-led ecosystem</p>
+                    </div>
+                    <div class="about-card-body">
+                        <p>A global network of developers, customers, partners, and Zoho experts active through forums, meetups, and events.</p>
+                        <ul>
+                            <li>Zoho Community Portal and forums</li>
+                            <li>Zoho meetups & user conferences</li>
+                            <li>Webinars and live Q&A sessions</li>
+                            <li>Certified partner program</li>
+                            <li>Zoho Creator hackathons, ZohoDay events</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hiring Process Section -->
+    <section id="hiring" class="hiring-process">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Zoho Hiring Process</h2>
+                <p>Our comprehensive 6-round evaluation ensures we find the best talent for our product teams</p>
+            </div>
+            
+            <div class="process-timeline">
+                <div class="process-step" data-aos="fade-up">
+                    <div class="step-content">
+                        <h3>Aptitude Round</h3>
+                        <p>Logical + math + basic programming MCQs to assess fundamental skills</p>
+                        <ul>
+                            <li>45-60 minute online test</li>
+                            <li>Focus on problem-solving ability</li>
+                            <li>Tests analytical and quantitative skills</li>
+                        </ul>
+                    </div>
+                    <div class="step-number">1</div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-content">
+                        <h3>Basic Programming Round</h3>
+                        <p>Write logic in C/Java (offline) to demonstrate coding fundamentals</p>
+                        <ul>
+                            <li>2-3 coding problems</li>
+                            <li>Focus on clean, efficient code</li>
+                            <li>Tests understanding of core concepts</li>
+                        </ul>
+                    </div>
+                    <div class="step-number">2</div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-content">
+                        <h3>Advanced Programming Round</h3>
+                        <p>Build working solution (real-time coding) to complex problems</p>
+                        <ul>
+                            <li>1-2 hour coding session</li>
+                            <li>Tests ability to architect solutions</li>
+                            <li>Evaluates problem decomposition skills</li>
+                        </ul>
+                    </div>
+                    <div class="step-number">3</div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-content">
+                        <h3>Technical Interview 1</h3>
+                        <p>DSA, language concepts, OS, DBMS deep dive</p>
+                        <ul>
+                            <li>45-60 minute discussion</li>
+                            <li>Tests theoretical knowledge</li>
+                            <li>Evaluates understanding of fundamentals</li>
+                        </ul>
+                    </div>
+                    <div class="step-number">4</div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-content">
+                        <h3>Technical Interview 2</h3>
+                        <p>System design + Zoho product knowledge evaluation</p>
+                        <ul>
+                            <li>1 hour design discussion</li>
+                            <li>Tests architectural thinking</li>
+                            <li>Evaluates product mindset</li>
+                        </ul>
+                    </div>
+                    <div class="step-number">5</div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="500">
+                    <div class="step-content">
+                        <h3>HR Interview</h3>
+                        <p>Resume discussion, expectations, goals alignment</p>
+                        <ul>
+                            <li>30-45 minute conversation</li>
+                            <li>Evaluates cultural fit</li>
+                            <li>Discusses career aspirations</li>
+                        </ul>
+                    </div>
+                    <div class="step-number">6</div>
+                </div>
+            </div>
+            
+            <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+                <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
+                    <h3>Project-based Hiring Alternative</h3>
+                    <p>Your ZohoVerse + Promptlytics + CiraBuddy platform can bypass traditional coding rounds. We look for:</p>
+                    <ul style="columns: 2; margin-top: 1rem;">
+                        <li>Clear product thinking</li>
+                        <li>Good UI/UX implementation</li>
+                        <li>Real problem-solving</li>
+                        <li>AI/ML practical usage</li>
+                        <li>JS/Deluge/Zoho Tools integration</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary" style="margin-top: 1.5rem;">Submit Your Project</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zoho School Section -->
+    <section id="school" class="zoho-school">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Zoho School of Technology</h2>
+                <p>Zoho's alternative to traditional college education - learn while you earn</p>
+            </div>
+            
+            <div class="school-container">
+                <div class="school-content" data-aos="fade-right">
+                    <h3>What is Zoho School?</h3>
+                    <p>Founded in 2005 by Zoho CEO Sridhar Vembu, Zoho School of Technology (ZST) is built for students right after 12th grade or diploma — no engineering degree required.</p>
+                    
+                    <div class="curriculum-list">
+                        <div class="curriculum-item">
+                            <div class="curriculum-header" onclick="toggleCurriculum(this)">
+                                <div class="curriculum-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <h4>Curriculum & Structure</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="curriculum-details">
+                                <p>18-24 month program with paid stipend during training. Hands-on learning includes:</p>
+                                <ul>
+                                    <li>Java, C, Python programming</li>
+                                    <li>Databases and Operating Systems</li>
+                                    <li>Web Technologies and UX design</li>
+                                    <li>Logic building and problem solving</li>
+                                    <li>Mentorship under senior Zoho engineers</li>
+                                    <li>Real Zoho projects experience</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="curriculum-item">
+                            <div class="curriculum-header" onclick="toggleCurriculum(this)">
+                                <div class="curriculum-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <h4>Placement & Eligibility</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="curriculum-details">
+                                <p>90%+ students get placed into Zoho's product teams directly. Zoho doesn't require a formal degree if you're from ZST.</p>
+                                <p><strong>Eligibility:</strong></p>
+                                <ul>
+                                    <li>Age: 17+</li>
+                                    <li>Education: 12th completed or diploma</li>
+                                    <li>No JEE/NEET required</li>
+                                    <li>Passion for programming and problem-solving</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="curriculum-item">
+                            <div class="curriculum-header" onclick="toggleCurriculum(this)">
+                                <div class="curriculum-icon">
+                                    <i class="fas fa-rocket"></i>
+                                </div>
+                                <h4>Mission & Benefits</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="curriculum-details">
+                                <p>Make tech education accessible without the burden of expensive degrees. Focuses on practical skills, soft skills, and real-world exposure.</p>
+                                <ul>
+                                    <li>No tuition fees - earn while you learn</li>
+                                    <li>Direct path to Zoho employment</li>
+                                    <li>Focus on practical, job-relevant skills</li>
+                                    <li>Alternative to expensive college degrees</li>
+                                    <li>Community of like-minded learners</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="btn btn-primary btn-lg" style="margin-top: 2rem;">Apply to Zoho School</a>
+                </div>
+                
+                <div class="school-image" data-aos="fade-left">
+                    <img src="b12.jfif" alt="Zoho School of Technology">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Get In Touch</h2>
+                <p>Have questions about Zoho School or the hiring process? Reach out to us</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-right">
+                    <h3>Contact Information</h3>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Location</h4>
+                            <p>Zoho Corporation, Estancia IT Park, Plot No. 140 & 151, GST Road, Vallancherry Village, Chengalpattu District, Tamil Nadu 603202, India</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Email</h4>
+                            <p>school@zohocorp.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Phone</h4>
+                            <p>+91 44 6630 3000</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form" data-aos="fade-left">
+                    <h3>Send Us a Message</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" placeholder="Enter your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" required>
+                                <option value="" disabled selected>Select a subject</option>
+                                <option value="school">Zoho School Inquiry</option>
+                                <option value="hiring">Hiring Process</option>
+                                <option value="project">Project Submission</option>
+                                <option value="other">Other Questions</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Enter your message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>ZohoQuest</h3>
+                    <p>Your guide to Zoho careers and education pathways.</p>
+                    <p>Part of the ZohoVerse ecosystem.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#about">About Zoho</a></li>
+                        <li><a href="#hiring">Hiring Process</a></li>
+                        <li><a href="#school">Zoho School</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://www.zoho.com/school-of-technology/" target="_blank">Zoho School Official Site</a></li>
+                        <li><a href="https://www.zoho.com/careers/" target="_blank">Zoho Careers</a></li>
+                        <li><a href="https://www.zoho.com/community/" target="_blank">Zoho Community</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                &copy; 2023 ZohoQuest. All rights reserved. Not affiliated with Zoho Corporation.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 120
+        });
+        
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Toggle curriculum details
+        function toggleCurriculum(header) {
+            const item = header.parentElement;
+            const details = item.querySelector('.curriculum-details');
+            const icon = header.querySelector('.fa-chevron-down');
+            
+            details.classList.toggle('show');
+            icon.classList.toggle('fa-rotate-180');
+        }
+        
+        // Update active nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

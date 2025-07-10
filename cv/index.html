@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZohoVerse CV Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="zoho-container">
+        <header class="zoho-header">
+            <div class="logo-container">
+                <i class="fas fa-file-alt"></i>
+                <h1>ZohoVerse CV Maker</h1>
+            </div>
+            <p>Create professional resumes in minutes</p>
+        </header>
+
+        <div class="zoho-form-container">
+            <form id="cv-form">
+                <div class="form-columns">
+                    <div class="form-column">
+                        <h2><i class="fas fa-user-tie"></i> Personal Information</h2>
+                        
+                        <div class="form-group">
+                            <label for="full-name">Full Name*</label>
+                            <input type="text" id="full-name" required placeholder="John Doe">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="job-title">Professional Title*</label>
+                            <input type="text" id="job-title" required placeholder="Full-Stack Developer">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" required placeholder="john@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone*</label>
+                            <input type="tel" id="phone" required placeholder="+1 234 567 890">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Address*</label>
+                            <textarea id="address" rows="2" required placeholder="123 Main St, New York, NY"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="summary">Professional Summary*</label>
+                            <textarea id="summary" rows="4" required placeholder="Tell about yourself"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-column">
+                        <h2><i class="fas fa-briefcase"></i> Professional Details</h2>
+                        
+                        <div class="form-group">
+                            <label for="experience">Work Experience*</label>
+                            <textarea id="experience" rows="4" required placeholder="About Your Experience
+"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projects">Projects*</label>
+                            <textarea id="projects" rows="4" required placeholder="Tell about your projects
+"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="skills">Skills*</label>
+                            <textarea id="skills" rows="3" required placeholder="Programming: JavaScript, Python, SQL etc
+"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="education">Education*</label>
+                            <textarea id="education" rows="3" required placeholder="University of Technology, Computer Science (2015-2019)"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="preview-btn" class="btn btn-preview">
+                        <i class="fas fa-eye"></i> Preview CV
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-file-pdf"></i> Download PDF
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="preview-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>CV Preview</h3>
+                    <button id="close-preview" class="btn-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="cv-template" class="cv-template"></div>
+                <div class="modal-footer">
+                    <button id="download-from-preview" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

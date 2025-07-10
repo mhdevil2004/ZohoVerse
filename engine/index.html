@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VisualSearch | AI-Powered Image Discovery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Hero Search Section -->
+  <div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content animate__animated animate__fadeIn">
+      <h1 class="hero-title">Discover Stunning Visuals</h1>
+      <p class="hero-subtitle">Search millions of high-quality images with our AI-powered engine</p>
+      
+      <div class="search-container">
+        <div class="search-box">
+          <input type="text" id="search-input" placeholder="Search for images..." autocomplete="off" />
+          <button id="search-btn" class="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div class="search-suggestions">
+          <span>Trending:</span>
+          <a href="#">Nature</a>
+          <a href="#">Technology</a>
+          <a href="#">Travel</a>
+          <a href="#">Art</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <div class="filter-options">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Photos</button>
+      <button class="filter-btn">Vectors</button>
+      <button class="filter-btn">Illustrations</button>
+      <div class="dropdown">
+        <button class="dropdown-btn">Orientation <i class="fas fa-chevron-down"></i></button>
+        <div class="dropdown-content">
+          <a href="#">All Orientations</a>
+          <a href="#">Horizontal</a>
+          <a href="#">Vertical</a>
+          <a href="#">Square</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropdown-btn">Color <i class="fas fa-chevron-down"></i></button>
+        <div class="dropdown-content">
+          <div class="color-options">
+            <span class="color-dot" style="background: #ff0000;"></span>
+            <span class="color-dot" style="background: #00ff00;"></span>
+            <span class="color-dot" style="background: #0000ff;"></span>
+            <span class="color-dot" style="background: #ffff00;"></span>
+            <span class="color-dot" style="background: #ff00ff;"></span>
+            <span class="color-dot" style="background: #000000;"></span>
+            <span class="color-dot" style="background: #ffffff;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Gallery -->
+  <div class="image-gallery">
+    <div class="gallery-header">
+      <h2>Featured Images</h2>
+      <div class="view-options">
+        <button class="view-btn active"><i class="fas fa-th"></i></button>
+        <button class="view-btn"><i class="fas fa-th-large"></i></button>
+        <button class="view-btn"><i class="fas fa-list"></i></button>
+      </div>
+    </div>
+    
+    <div class="images" id="image-list">
+      <!-- Images will be loaded here dynamically -->
+    </div>
+    
+    <div class="load-more">
+      <button id="load-more-btn" class="load-more-btn">Load More Images</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <h3>VisualSearch</h3>
+        <p>The world's most powerful image search engine</p>
+      </div>
+      <div class="footer-links">
+        <div class="link-column">
+          <h4>Company</h4>
+          <a href="#">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Press</a>
+        </div>
+        <div class="link-column">
+          <h4>Resources</h4>
+          <a href="#">Blog</a>
+          <a href="#">API</a>
+          <a href="#">Help Center</a>
+        </div>
+        <div class="link-column">
+          <h4>Legal</h4>
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Licensing</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2023 VisualSearch. All rights reserved.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-pinterest"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Image Modal -->
+  <div id="image-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <img id="modal-image" src="img/image1.jpg" alt="Full size image">
+      <div class="image-info">
+        <div class="image-meta">
+          <h3 id="image-title">Image Title</h3>
+          <p id="image-author">By Photographer</p>
+          <p id="image-size">5000 × 3000 px</p>
+        </div>
+        <div class="image-actions">
+          <button class="download-btn"><i class="fas fa-download"></i> Download</button>
+          <button class="like-btn"><i class="far fa-heart"></i> Like</button>
+          <button class="share-btn"><i class="fas fa-share-alt"></i> Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

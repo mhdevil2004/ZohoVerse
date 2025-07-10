@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deluge Scripting Academy</title>
+    <style>
+        :root {
+            --zoho-blue: #2a5fca;
+            --zoho-light-blue: #e6f0ff;
+            --zoho-dark-blue: #1a4a8f;
+            --zoho-gray: #f5f7fa;
+            --zoho-dark-gray: #6b7785;
+            --zoho-green: #4caf50;
+            --zoho-orange: #ff9800;
+            --zoho-red: #f44336;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--zoho-gray);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: var(--zoho-blue);
+            font-size: 24px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--zoho-dark-blue);
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: var(--zoho-light-blue);
+            color: var(--zoho-blue);
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        .content-area {
+            flex: 3;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        h2 {
+            color: var(--zoho-blue);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            color: var(--zoho-dark-blue);
+            margin: 15px 0 10px;
+        }
+
+        .topic-list {
+            list-style: none;
+        }
+
+        .topic-list li {
+            margin-bottom: 10px;
+        }
+
+        .topic-list a {
+            display: block;
+            padding: 8px 10px;
+            text-decoration: none;
+            color: #555;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .topic-list a:hover {
+            background-color: var(--zoho-light-blue);
+            color: var(--zoho-blue);
+        }
+
+        .topic-list a.active {
+            background-color: var(--zoho-blue);
+            color: white;
+        }
+
+        .code-block {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--zoho-blue);
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .example {
+            background-color: var(--zoho-light-blue);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--zoho-dark-blue);
+            margin-bottom: 10px;
+        }
+
+        .quiz {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid var(--zoho-orange);
+        }
+
+        .quiz-question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .quiz-options {
+            margin-left: 20px;
+        }
+
+        .quiz-option {
+            margin-bottom: 5px;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: var(--zoho-blue);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: var(--zoho-dark-blue);
+        }
+
+        .button.secondary {
+            background-color: white;
+            color: var(--zoho-blue);
+            border: 1px solid var(--zoho-blue);
+        }
+
+        .button.secondary:hover {
+            background-color: var(--zoho-light-blue);
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .chat-container {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .chat-header {
+            background-color: var(--zoho-blue);
+            color: white;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            color: white;
+            margin: 0;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .chat-body {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background-color: var(--zoho-light-blue);
+            margin-left: auto;
+            border-radius: 12px 12px 0 12px;
+        }
+
+        .bot-message {
+            background-color: #f1f1f1;
+            margin-right: auto;
+            border-radius: 12px 12px 12px 0;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .chat-input button {
+            padding: 10px 15px;
+            background-color: var(--zoho-blue);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--zoho-blue);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        .chat-toggle i {
+            font-size: 24px;
+        }
+
+        .error {
+            color: var(--zoho-red);
+            background-color: #ffebee;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .success {
+            color: var(--zoho-green);
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .tab-container {
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--zoho-blue);
+            color: var(--zoho-blue);
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 15px 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            .main-content {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                min-width: 100%;
+            }
+
+            .chat-container {
+                width: 90%;
+                right: 5%;
+            }
+        }
+
+        /* Syntax highlighting */
+        .keyword {
+            color: #0000ff;
+            font-weight: bold;
+        }
+        .string {
+            color: #a31515;
+        }
+        .comment {
+            color: #008000;
+            font-style: italic;
+        }
+        .number {
+            color: #098658;
+        }
+        .function {
+            color: #795e26;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+               
+                <h1>Zohoverse Academy</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Learn</a></li>
+                    <li><a href="#">Examples</a></li>
+                    <li><a href="#">Exercises</a></li>
+                    <li><a href="#">Resources</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search Deluge topics...">
+                </div>
+                <h2>Deluge Basics</h2>
+                <ul class="topic-list">
+                    <li><a href="#" class="active" data-topic="intro">Introduction to Deluge</a></li>
+                    <li><a href="#" data-topic="variables">Variables & Data Types</a></li>
+                    <li><a href="#" data-topic="operators">Operators</a></li>
+                    <li><a href="#" data-topic="conditionals">Conditional Statements</a></li>
+                    <li><a href="#" data-topic="loops">Loops</a></li>
+                    <li><a href="#" data-topic="functions">Functions</a></li>
+                    <li><a href="#" data-topic="collections">Collections (List & Map)</a></li>
+                    <li><a href="#" data-topic="dates">Date & Time Functions</a></li>
+                </ul>
+
+                <h2>Zoho Integration</h2>
+                <ul class="topic-list">
+                    <li><a href="#" data-topic="crm">Zoho CRM Integration</a></li>
+                    <li><a href="#" data-topic="creator">Zoho Creator</a></li>
+                    <li><a href="#" data-topic="workflows">Workflows & Buttons</a></li>
+                    <li><a href="#" data-topic="schedules">Scheduled Functions</a></li>
+                    <li><a href="#" data-topic="error">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="content-area">
+                <div id="intro" class="topic-content active">
+                    <h2>Introduction to Deluge</h2>
+                    <p>Deluge (Data Enriched Language for the Universal Grid Environment) is Zoho's proprietary scripting language designed for business process automation and application development across Zoho's ecosystem.</p>
+                    
+                    <div class="example">
+                        <div class="example-title">Key Features:</div>
+                        <ul>
+                            <li>Low-code scripting language optimized for business automation</li>
+                            <li>Tight integration with all Zoho products (CRM, Creator, Books, etc.)</li>
+                            <li>Simplified syntax compared to traditional programming languages</li>
+                            <li>Built-in functions for common business operations</li>
+                            <li>Cloud-based execution with no server management required</li>
+                        </ul>
+                    </div>
+
+                    <h3>Deluge vs JavaScript</h3>
+                    <div class="tab-container">
+                        <div class="tabs">
+                            <div class="tab active" data-tab="deluge">Deluge</div>
+                            <div class="tab" data-tab="javascript">JavaScript</div>
+                        </div>
+                        <div class="tab-content active" id="deluge-tab">
+                            <div class="code-block">// Deluge is optimized for business automation
+// Simple CRM record creation example
+newLead = Map();
+newLead.put("First_Name", "John");
+newLead.put("Company", "Acme Inc");
+response = zoho.crm.create("Leads", newLead);</div>
+                            <p>Deluge focuses on business operations with simplified syntax and direct integration with Zoho apps.</p>
+                        </div>
+                        <div class="tab-content" id="javascript-tab">
+                            <div class="code-block">// JavaScript is more general purpose
+// Similar CRM operation would require API calls
+const newLead = {
+    First_Name: "John",
+    Company: "Acme Inc"
+};
+
+fetch('https://crm.zoho.com/api/leads', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newLead)
+})
+.then(response => response.json())
+.then(data => console.log(data));</div>
+                            <p>JavaScript requires more code for the same operation and needs explicit API handling.</p>
+                        </div>
+                    </div>
+
+                    <div class="quiz">
+                        <div class="quiz-question">What is Deluge primarily designed for?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option"><input type="radio" name="quiz1" id="q1a"> <label for="q1a">General purpose web development</label></div>
+                            <div class="quiz-option"><input type="radio" name="quiz1" id="q1b"> <label for="q1b">Business process automation</label></div>
+                            <div class="quiz-option"><input type="radio" name="quiz1" id="q1c"> <label for="q1c">Mobile app development</label></div>
+                            <div class="quiz-option"><input type="radio" name="quiz1" id="q1d"> <label for="q1d">Data science</label></div>
+                        </div>
+                        <button class="button" onclick="checkAnswer('quiz1', 'q1b')">Check Answer</button>
+                    </div>
+                </div>
+
+                <div id="variables" class="topic-content">
+                    <h2>Variables & Data Types</h2>
+                    <p>Variables are containers for storing data values. In Deluge, variables are dynamically typed, meaning you don't need to declare the type explicitly.</p>
+                    
+                    <div class="code-block">// Variable declaration
+name = "John Doe";  // String
+age = 30;          // Integer
+price = 19.99;     // Decimal
+isActive = true;   // Boolean
+joinDate = '25-Dec-2023'; // Date</div>
+
+                    <h3>Common Data Types</h3>
+                    <div class="example">
+                        <table>
+                            <tr>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>Text data</td>
+                                <td>"Hello", "Zoho CRM"</td>
+                            </tr>
+                            <tr>
+                                <td>Integer</td>
+                                <td>Whole numbers</td>
+                                <td>10, -5, 1000</td>
+                            </tr>
+                            <tr>
+                                <td>Decimal</td>
+                                <td>Floating point numbers</td>
+                                <td>3.14, -0.5, 100.99</td>
+                            </tr>
+                            <tr>
+                                <td>Boolean</td>
+                                <td>True/False values</td>
+                                <td>true, false</td>
+                            </tr>
+                            <tr>
+                                <td>Date/DateTime</td>
+                                <td>Date and time values</td>
+                                <td>'25-Dec-2023', '2023-12-25 14:30:00'</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="quiz">
+                        <div class="quiz-question">Which of these is NOT a valid Deluge variable declaration?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option"><input type="radio" name="quiz2" id="q2a"> <label for="q2a">customerName = "Acme Corp";</label></div>
+                            <div class="quiz-option"><input type="radio" name="quiz2" id="q2b"> <label for="q2b">int count = 5;</label></div>
+                            <div class="quiz-option"><input type="radio" name="quiz2" id="q2c"> <label for="q2c">isPremium = true;</label></div>
+                            <div class="quiz-option"><input type="radio" name="quiz2" id="q2d"> <label for="q2d">invoiceDate = '01-Jan-2024';</label></div>
+                        </div>
+                        <button class="button" onclick="checkAnswer('quiz2', 'q2b')">Check Answer</button>
+                    </div>
+                </div>
+
+                <!-- More topic content divs would follow the same pattern -->
+                <!-- For brevity, I've included just two topics in this example -->
+
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-toggle" id="chatToggle">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h3>Deluge Assistant</h3>
+            <button class="chat-close" id="chatClose">&times;</button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message bot-message">
+                Hello! I'm your Deluge scripting assistant. How can I help you with Deluge today?
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Ask about Deluge...">
+            <button id="sendButton"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Topic navigation
+        document.querySelectorAll('.topic-list a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const topicId = this.getAttribute('data-topic');
+                
+                // Hide all topic contents
+                document.querySelectorAll('.topic-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected topic
+                document.getElementById(topicId).classList.add('active');
+                
+                // Update active link
+                document.querySelectorAll('.topic-list a').forEach(lnk => {
+                    lnk.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Update active tab
+                this.parentElement.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Update active content
+                const container = this.closest('.tab-container');
+                container.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                container.querySelector(`#${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Chat functionality
+        const chatToggle = document.getElementById('chatToggle');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatClose = document.getElementById('chatClose');
+        const chatBody = document.getElementById('chatBody');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+
+        chatToggle.addEventListener('click', function() {
+            chatContainer.style.display = chatContainer.style.display === 'block' ? 'none' : 'block';
+        });
+
+        chatClose.addEventListener('click', function() {
+            chatContainer.style.display = 'none';
+        });
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'chat-message user-message';
+            userMessage.textContent = message;
+            chatBody.appendChild(userMessage);
+
+            // Clear input
+            userInput.value = '';
+
+            // Scroll to bottom
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Process message and generate response
+            setTimeout(() => {
+                const response = generateResponse(message);
+                const botMessage = document.createElement('div');
+                botMessage.className = 'chat-message bot-message';
+                botMessage.innerHTML = response;
+                chatBody.appendChild(botMessage);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 500);
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Simple response generation
+        function generateResponse(message) {
+            const lowerMsg = message.toLowerCase();
+            
+            if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+                return "Hello! How can I assist you with Deluge scripting today?";
+            } else if (lowerMsg.includes('variable') || lowerMsg.includes('declare')) {
+                return `In Deluge, you can declare variables like this:
+<pre><code>name = "John";  // String
+age = 30;      // Integer
+price = 19.99; // Decimal
+isActive = true; // Boolean</code></pre>
+Deluge is dynamically typed, so you don't need to specify the type.`;
+            } else if (lowerMsg.includes('function') || lowerMsg.includes('create')) {
+                return `Here's how to create a function in Deluge:
+<pre><code>function calculateDiscount(price, discountPercent)
+{
+    discountAmount = price * discountPercent / 100;
+    finalPrice = price - discountAmount;
+    return finalPrice;
+}
+
+// Call the function
+salePrice = calculateDiscount(100, 15);</code></pre>`;
+            } else if (lowerMsg.includes('crm') || lowerMsg.includes('record')) {
+                return `To work with Zoho CRM records in Deluge:
+<pre><code>// Create a new lead
+newLead = Map();
+newLead.put("First_Name", "John");
+newLead.put("Company", "Acme Inc");
+response = zoho.crm.create("Leads", newLead);
+
+// Get records
+leads = zoho.crm.getRecords("Leads");</code></pre>`;
+            } else if (lowerMsg.includes('loop') || lowerMsg.includes('iterate')) {
+                return `Deluge supports loops to iterate through collections:
+<pre><code>// For each loop
+for each lead in leads
+{
+    info lead.get("Email");
+}
+
+// While loop
+i = 0;
+while (i < 5)
+{
+    info i;
+    i = i + 1;
+}</code></pre>`;
+            } else if (lowerMsg.includes('condition') || lowerMsg.includes('if')) {
+                return `Conditional statements in Deluge:
+<pre><code>if (score > 90)
+{
+    grade = "A";
+}
+else if (score > 80)
+{
+    grade = "B";
+}
+else
+{
+    grade = "C";
+}</code></pre>`;
+            } else if (lowerMsg.includes('date') || lowerMsg.includes('time')) {
+                return `Working with dates in Deluge:
+<pre><code>// Get current date
+today = zoho.currentdate;
+
+// Format date
+formattedDate = today.toString("yyyy-MM-dd");
+
+// Add days to date
+futureDate = today.addDay(7);
+
+// Compare dates
+if (dueDate < today)
+{
+    info "This task is overdue!";
+}</code></pre>`;
+            } else if (lowerMsg.includes('list') || lowerMsg.includes('array') || lowerMsg.includes('map')) {
+                return `Collections in Deluge (List and Map):
+<pre><code>// List example
+colors = List();
+colors.add("Red");
+colors.add("Green");
+colors.add("Blue");
+
+// Map example (key-value pairs)
+contact = Map();
+contact.put("name", "John");
+contact.put("email", "john@example.com");
+contact.put("phone", "555-1234");</code></pre>`;
+            } else if (lowerMsg.includes('error') || lowerMsg.includes('exception')) {
+                return `Error handling in Deluge:
+<pre><code>try
+{
+    // Code that might fail
+    data = zoho.crm.getRecordById("Leads", 123456);
+}
+catch (e)
+{
+    // Handle the error
+    info "Error occurred: " + e.toString();
+}</code></pre>`;
+            } else {
+                return "I'm not sure I understand. Could you ask about specific Deluge concepts like variables, functions, CRM integration, or other topics?";
+            }
+        }
+
+        // Quiz answer checking
+        function checkAnswer(quizName, correctId) {
+            const selected = document.querySelector(`input[name="${quizName}"]:checked`);
+            if (!selected) {
+                alert("Please select an answer!");
+                return;
+            }
+
+            if (selected.id === correctId) {
+                alert("Correct! 🎉");
+            } else {
+                alert("Incorrect. Try again!");
+            }
+        }
+
+        // Syntax highlighting (simplified)
+        document.querySelectorAll('.code-block').forEach(block => {
+            let code = block.textContent;
+            
+            // Highlight keywords
+            const keywords = ['if', 'else', 'for', 'each', 'while', 'function', 'return', 'try', 'catch', 'info', 'alert', 'map', 'list', 'put', 'get', 'add'];
+            keywords.forEach(kw => {
+                const regex = new RegExp(`\\b${kw}\\b`, 'g');
+                code = code.replace(regex, `<span class="keyword">${kw}</span>`);
+            });
+            
+            // Highlight strings
+            code = code.replace(/"([^"]*)"/g, '<span class="string">"$1"</span>');
+            code = code.replace(/'([^']*)'/g, '<span class="string">\'$1\'</span>');
+            
+            // Highlight comments
+            code = code.replace(/\/\/.*$/gm, '<span class="comment">$&</span>');
+            code = code.replace(/\/\*[\s\S]*?\*\//g, '<span class="comment">$&</span>');
+            
+            // Highlight numbers
+            code = code.replace(/\b\d+\b/g, '<span class="number">$&</span>');
+            
+            block.innerHTML = code;
+        });
+    </script>
+</body>
+</html>

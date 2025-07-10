@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZohoVerse Careers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="Zoho  main logo.png" alt="ZohoVerse Logo">
+                <h1>ZohoVerse</h1>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search for jobs, companies, or skills..." id="searchInput">
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Jobs</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Filters</h3>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" checked>
+                        <span>Remote Jobs</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox">
+                        <span>Full-time</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox">
+                        <span>Part-time</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox">
+                        <span>Internship</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Salary Range</h3>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox">
+                        <span>₹0 - ₹5 LPA</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox">
+                        <span>₹5 - ₹10 LPA</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" checked>
+                        <span>₹10 - ₹20 LPA</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox">
+                        <span>₹20+ LPA</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Experience Level</h3>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" checked>
+                        <span>Entry Level</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox">
+                        <span>Mid Level</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox">
+                        <span>Senior Level</span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <div class="job-card" data-job-id="1">
+                <div class="job-header">
+                    <img src="https://logo.clearbit.com/google.com" alt="Google" class="company-logo">
+                    <div class="job-info">
+                        <h3>Frontend Developer (React)</h3>
+                        <span class="company">Google</span>
+                        <div class="job-meta">
+                            <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Bangalore, India</span>
+                            <span class="meta-item"><i class="fas fa-briefcase"></i> Full-time</span>
+                            <span class="meta-item"><i class="fas fa-money-bill-wave"></i> ₹15 - ₹25 LPA</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="job-description">
+                    We're looking for a skilled Frontend Developer to join our team. You'll work with React, TypeScript, and modern frontend tools to build amazing user experiences.
+                </p>
+                <div class="job-tags">
+                    <span class="tag">React</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">UI/UX</span>
+                </div>
+                <div class="job-actions">
+                    <button class="btn btn-primary">Apply Now</button>
+                    <button class="btn btn-outline">Save Job</button>
+                </div>
+            </div>
+            
+            <div class="job-card" data-job-id="2">
+                <div class="job-header">
+                    <img src="https://logo.clearbit.com/zoho.com" alt="Zoho" class="company-logo">
+                    <div class="job-info">
+                        <h3>Full Stack Developer</h3>
+                        <span class="company">Zoho</span>
+                        <div class="job-meta">
+                            <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Chennai, India</span>
+                            <span class="meta-item"><i class="fas fa-briefcase"></i> Full-time</span>
+                            <span class="meta-item"><i class="fas fa-money-bill-wave"></i> ₹12 - ₹20 LPA</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="job-description">
+                    Join Zoho's product team to build scalable web applications. We work with Java, React, and our own frameworks. Experience with databases and APIs is a plus.
+                </p>
+                <div class="job-tags">
+                    <span class="tag">Java</span>
+                    <span class="tag">React</span>
+                    <span class="tag">MySQL</span>
+                    <span class="tag">REST API</span>
+                </div>
+                <div class="job-actions">
+                    <button class="btn btn-primary">Apply Now</button>
+                    <button class="btn btn-outline">Save Job</button>
+                </div>
+            </div>
+            
+            <div class="job-card" data-job-id="3">
+                <div class="job-header">
+                    <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft" class="company-logo">
+                    <div class="job-info">
+                        <h3>AI Engineer</h3>
+                        <span class="company">Microsoft</span>
+                        <div class="job-meta">
+                            <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Hyderabad, India</span>
+                            <span class="meta-item"><i class="fas fa-briefcase"></i> Full-time</span>
+                            <span class="meta-item"><i class="fas fa-money-bill-wave"></i> ₹20 - ₹35 LPA</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="job-description">
+                    Work on cutting-edge AI projects with our research team. You'll develop machine learning models, work with large datasets, and deploy AI solutions at scale.
+                </p>
+                <div class="job-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">TensorFlow</span>
+                    <span class="tag">NLP</span>
+                </div>
+                <div class="job-actions">
+                    <button class="btn btn-primary">Apply Now</button>
+                    <button class="btn btn-outline">Save Job</button>
+                </div>
+            </div>
+        </main>
+        
+        <aside class="right-sidebar">
+            <div class="widget">
+                <h3 class="widget-title">Trending Companies</h3>
+                <div class="trending-company">
+                    <img src="https://logo.clearbit.com/google.com" alt="Google" class="company-logo-sm">
+                    <div class="company-info">
+                        <h4>Google</h4>
+                        <p>48 open positions</p>
+                    </div>
+                </div>
+                <div class="trending-company">
+                    <img src="https://logo.clearbit.com/zoho.com" alt="Zoho" class="company-logo-sm">
+                    <div class="company-info">
+                        <h4>Zoho</h4>
+                        <p>32 open positions</p>
+                    </div>
+                </div>
+                <div class="trending-company">
+                    <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft" class="company-logo-sm">
+                    <div class="company-info">
+                        <h4>Microsoft</h4>
+                        <p>25 open positions</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="widget">
+                <h3 class="widget-title">Quick Actions</h3>
+                <div class="quick-actions">
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Build Resume</span>
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-bell"></i>
+                        <span>Job Alerts</span>
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Career Stats</span>
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-users"></i>
+                        <span>Refer Friends</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <div class="modal-overlay" id="jobModal">
+        <div class="job-modal">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="modal-header">
+                <img src="Zoho  main logo.png" alt="Company Logo" class="modal-company-logo" id="modalLogo">
+                <div class="modal-job-info">
+                    <h2 id="modalJobTitle">Job Title</h2>
+                    <span class="company" id="modalCompany">Company Name</span>
+                    <div class="modal-job-meta" id="modalJobMeta"></div>
+                </div>
+            </div>
+            
+            <div class="modal-content">
+                <div class="modal-section">
+                    <h3>Job Description</h3>
+                    <p id="modalJobDescription"></p>
+                </div>
+                
+                <div class="modal-section">
+                    <h3>Requirements</h3>
+                    <ul id="modalRequirements"></ul>
+                </div>
+                
+                <div class="modal-section">
+                    <h3>Benefits</h3>
+                    <ul id="modalBenefits"></ul>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-primary">Apply Now</button>
+                <button class="btn btn-outline">Save Job</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

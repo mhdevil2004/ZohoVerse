@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Whiteboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+      <div class="logo">Whiteboard Pro</div>
+      <div class="page-controls">
+        <button id="prev-page"><i class="fas fa-chevron-left"></i></button>
+        <span id="page-number">Page 1</span>
+        <button id="next-page"><i class="fas fa-chevron-right"></i></button>
+        <button id="new-page"><i class="fas fa-plus"></i></button>
+      </div>
+      <div class="user-controls">
+        <button id="settings-btn"><i class="fas fa-cog"></i> Settings</button>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Tools Panel -->
+      <div class="tools-panel">
+        <!-- Drawing Tools -->
+        <div class="tool-group">
+          <button class="tool-btn active" id="pen-btn" title="Pen">
+            <i class="fas fa-pen"></i>
+          </button>
+          <button class="tool-btn" id="shapes-btn" title="Shapes">
+            <i class="fas fa-shapes"></i>
+          </button>
+          <button class="tool-btn" id="eraser-btn" title="Eraser">
+            <i class="fas fa-eraser"></i>
+          </button>
+        </div>
+
+        <!-- Utility Tools -->
+        <div class="tool-group">
+          <button class="tool-btn" id="undo-btn" title="Undo">
+            <i class="fas fa-undo"></i>
+          </button>
+          <button class="tool-btn" id="redo-btn" title="Redo">
+            <i class="fas fa-redo"></i>
+          </button>
+          <button class="tool-btn" id="clear-btn" title="Clear">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+
+        <!-- Media Tools -->
+        <div class="tool-group">
+          <button class="tool-btn" id="mic-btn" title="Microphone">
+            <i class="fas fa-microphone"></i>
+          </button>
+          <button class="tool-btn" id="camera-btn" title="Camera">
+            <i class="fas fa-video"></i>
+          </button>
+          <button class="tool-btn" id="screen-share-btn" title="Share Screen">
+            <i class="fas fa-desktop"></i>
+          </button>
+        </div>
+
+        <!-- Chat Toggle -->
+        <button class="tool-btn" id="chat-btn" title="Chat">
+          <i class="fas fa-comments"></i>
+        </button>
+      </div>
+
+      <!-- Whiteboard Canvas -->
+      <canvas id="whiteboard"></canvas>
+
+      <!-- Shapes Panel (hidden by default) -->
+      <div class="shapes-panel" id="shapes-panel">
+        <button class="shape-btn" data-shape="line">
+          <i class="fas fa-minus"></i> Line
+        </button>
+        <button class="shape-btn" data-shape="rectangle">
+          <i class="fas fa-square"></i> Rectangle
+        </button>
+        <button class="shape-btn" data-shape="circle">
+          <i class="fas fa-circle"></i> Circle
+        </button>
+        <button class="shape-btn" data-shape="triangle">
+          <i class="fas fa-play"></i> Triangle
+        </button>
+        <button class="shape-btn" data-shape="arrow">
+          <i class="fas fa-arrow-right"></i> Arrow
+        </button>
+      </div>
+
+      <!-- Settings Panel (hidden by default) -->
+      <div class="settings-panel" id="settings-panel">
+        <h3>Settings</h3>
+        <div class="setting-group">
+          <label for="line-width">Line Width</label>
+          <input type="range" id="line-width" min="1" max="50" value="3">
+          <span id="width-value">3px</span>
+        </div>
+        <div class="setting-group">
+          <label>Color</label>
+          <div class="color-palette">
+            <button class="color-swatch active" style="background: #000000;" data-color="#000000"></button>
+            <button class="color-swatch" style="background: #FF0000;" data-color="#FF0000"></button>
+            <button class="color-swatch" style="background: #00FF00;" data-color="#00FF00"></button>
+            <button class="color-swatch" style="background: #0000FF;" data-color="#0000FF"></button>
+            <button class="color-swatch" style="background: #FFFF00;" data-color="#FFFF00"></button>
+            <button class="color-swatch" style="background: #FFA500;" data-color="#FFA500"></button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label for="opacity">Opacity</label>
+          <input type="range" id="opacity" min="10" max="100" value="100">
+          <span id="opacity-value">100%</span>
+        </div>
+      </div>
+
+      <!-- Chat Panel (hidden by default) -->
+      <div class="chat-panel" id="chat-panel">
+        <div class="chat-header">
+          <h3>Live Chat</h3>
+          <button class="close-btn" id="close-chat">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="message system">
+            <p>Chat connected. Type a message to begin!</p>
+          </div>
+        </div>
+        <div class="chat-input">
+          <input type="text" id="message-input" placeholder="Type your message...">
+          <button id="send-btn">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Video Panel -->
+      <div class="video-panel" id="video-panel">
+        <video id="user-video" autoplay muted></video>
+        <div class="video-controls">
+          <button id="toggle-video">
+            <i class="fas fa-video"></i>
+          </button>
+          <button id="toggle-mic">
+            <i class="fas fa-microphone"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-item" id="tool-status">
+        <i class="fas fa-pen"></i> Pen
+      </div>
+      <div class="status-item" id="color-status">
+        <span class="color-preview" style="background: #000000;"></span>
+        #000000
+      </div>
+      <div class="status-item" id="size-status">
+        3px
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
