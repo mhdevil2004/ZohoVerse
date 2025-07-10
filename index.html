@@ -1,12 +1,445 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZohoVerse</title>
+  <title>ZohoVerse | All-in-One AI Career Platform</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== BASE STYLES ===== */
+    :root {
+      /* Light Mode (Default) */
+      --light-bg: #ffffff;
+      --light-text: #202124;
+      --light-text-secondary: #5f6368;
+      --light-surface: #f8f9fa;
+      --light-border: #dadce0;
+      --light-primary: #1a73e8;
+      --light-primary-hover: #1765cc;
+      --light-header-bg: rgba(255, 255, 255, 0.95);
+      
+      /* Dark Mode */
+      --dark-bg: #202124;
+      --dark-text: #e8eaed;
+      --dark-text-secondary: #9aa0a6;
+      --dark-surface: #2d2e30;
+      --dark-border: #3c4043;
+      --dark-primary: #8ab4f8;
+      --dark-primary-hover: #a8c7fa;
+      --dark-header-bg: rgba(32, 33, 36, 0.95);
+
+      /* Active Theme */
+      --bg: var(--light-bg);
+      --text: var(--light-text);
+      --text-secondary: var(--light-text-secondary);
+      --surface: var(--light-surface);
+      --border: var(--light-border);
+      --primary: var(--light-primary);
+      --primary-hover: var(--light-primary-hover);
+      --header-bg: var(--light-header-bg);
+      --shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15);
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: var(--dark-bg);
+      --text: var(--dark-text);
+      --text-secondary: var(--dark-text-secondary);
+      --surface: var(--dark-surface);
+      --border: var(--dark-border);
+      --primary: var(--dark-primary);
+      --primary-hover: var(--dark-primary-hover);
+      --header-bg: var(--dark-header-bg);
+      --shadow: 0 1px 2px 0 rgba(0,0,0,0.3), 0 2px 6px 2px rgba(0,0,0,0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Google Sans', Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: var(--transition);
+    }
+
+    /* ===== NAVBAR ===== */
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: var(--header-bg);
+      box-shadow: var(--shadow);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .menu-icon {
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--text);
+      padding: 8px;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .menu-icon:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .search-box {
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      width: 600px;
+      max-width: 100%;
+      transition: var(--transition);
+    }
+
+    .search-box:hover {
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-box input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 0.95rem;
+      padding: 0 12px;
+    }
+
+    .search-box i {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    .logo {
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .user-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .user-icon:hover {
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      background: var(--surface);
+      width: 280px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 24px;
+      padding-top: 80px;
+      transition: var(--transition);
+      z-index: 999;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        left: -280px;
+      }
+      
+      #menu-toggle:checked ~ .sidebar {
+        left: 0;
+      }
+    }
+
+    .shortcut a {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      transition: var(--transition);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .shortcut a:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .shortcut a.active {
+      background: rgba(26, 115, 232, 0.1);
+      color: var(--primary);
+    }
+
+    .shortcut a i {
+      width: 20px;
+      margin-right: 16px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .shortcut a p {
+      margin: 0;
+    }
+
+    .sidebar hr {
+      border: 0;
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 5%;
+      padding-top: 70px;
+      margin-left: 280px;
+      background: var(--bg);
+    }
+
+    @media (max-width: 1024px) {
+      .hero {
+        margin-left: 0;
+      }
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-heading {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s 0.3s forwards;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s 0.6s forwards;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      background: var(--primary);
+      color: white;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s 0.9s forwards;
+    }
+
+    .cta-button:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .cta-button i {
+      margin-left: 8px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== FEATURES SECTION ===== */
+    .features {
+      padding: 100px 5%;
+      background: var(--bg);
+      position: relative;
+      margin-left: 280px;
+    }
+
+    @media (max-width: 1024px) {
+      .features {
+        margin-left: 0;
+      }
+    }
+
+    .section-heading {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 60px;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: var(--transition);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .feature-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-5px);
+    }
+
+    .feature-card:nth-child(1) { animation: fadeInUp 0.8s 0.2s forwards; }
+    .feature-card:nth-child(2) { animation: fadeInUp 0.8s 0.4s forwards; }
+    .feature-card:nth-child(3) { animation: fadeInUp 0.8s 0.6s forwards; }
+    .feature-card:nth-child(4) { animation: fadeInUp 0.8s 0.8s forwards; }
+    .feature-card:nth-child(5) { animation: fadeInUp 0.8s 1.0s forwards; }
+    .feature-card:nth-child(6) { animation: fadeInUp 0.8s 1.2s forwards; }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      color: var(--primary);
+    }
+
+    .feature-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .feature-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ===== DARK/LIGHT MODE TOGGLE ===== */
+    .theme-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    .theme-toggle i {
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      .search-box {
+        width: 100%;
+        max-width: 400px;
+      }
+      
+      .nav-section {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .search-box {
+        display: none;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-bar {
+        padding: 12px 16px;
+      }
+    }
+  </style>
 </head>
 <body>
   <input type="checkbox" id="menu-toggle" class="menu-toggle" />
@@ -18,49 +451,146 @@
 
     <div class="mid nav-section">
       <div class="search-box">
-        <input type="text" placeholder="Search" />
-        <img src="images/search.png" alt="search" />
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search modules, features..." />
       </div>
     </div>
 
     <div class="right nav-section">
-      
+      <a href="#"><i class="fas fa-bell" style="color: var(--text-secondary);"></i></a>
       <a href="Portfolio/index.html"><img src="images/Green Gradient Minimalist Simple Instagram Profile Picture.png" class="user-icon" alt="user" /></a>
     </div>
   </nav>
 
   <div class="sidebar">
     <div class="shortcut">
-      <a href="#"><img src="images/home.png" /><p>Home</p></a>
-      <a  href="chatbot/index.html"><img src="images/explore.png" /><p>Chat-bot</p></a>
+      <a href="#" class="active"><i class="fas fa-home"></i><p>Home</p></a>
+      <a href="chatbot/index.html"><i class="fas fa-robot"></i><p>AI Chatbot</p></a>
       <a href="AI Interview/index.html"><i class="fas fa-microphone"></i><p>AI Interview</p></a>
-       <a href="DATA/index.html"><i class="fas fa-chart-simple"></i><p>Promptlytics</p></a>
-      <a href="Whiteboard/index.html"><img src="images/subscriprion.png" /><p>White-board</p></a>
-      <a href="Tech hustle/index.html"><img src="images/library.png" /><p>Tech Hustle</p></a>
-       <a href="Deluge/index.html"><img src="images/playlist.png" /><p>DelugeQuest</p></a>
-      <a href="cv/index.html"><img src="images/history.png" /><p>CV Generator</p></a>
-      <a href="blogs/index.html"><i class="fab fa-instagram"></i><p>Blogs</p></a>
-      <a href="engine/index.html"><img src="images/messages.png" /><p>Image Engine</p></a>
-      <a href="Job/index.html"><i class="fab fa-linkedin"></i><p>Job Portal</p></a>
-      <a href="Dashboard/index.html"><i class="fa-solid fa-chart-line"></i><p>Dashboard</p></a>
-
+      <a href="DATA/index.html"><i class="fas fa-chart-line"></i><p>Promptlytics</p></a>
+      <a href="Whiteboard/index.html"><i class="fas fa-chalkboard"></i><p>Whiteboard</p></a>
+      <a href="Tech hustle/index.html"><i class="fas fa-code"></i><p>Tech Hustle</p></a>
+      <a href="Deluge/index.html"><i class="fas fa-graduation-cap"></i><p>DelugeQuest</p></a>
+      <a href="cv/index.html"><i class="fas fa-file-alt"></i><p>CV Generator</p></a>
+      <a href="blogs/index.html"><i class="fas fa-blog"></i><p>Blogs</p></a>
+      <a href="engine/index.html"><i class="fas fa-image"></i><p>Image Engine</p></a>
+      <a href="Job/index.html"><i class="fas fa-briefcase"></i><p>Job Portal</p></a>
+      <a href="Dashboard/index.html"><i class="fas fa-tachometer-alt"></i><p>Dashboard</p></a>
       <hr />
+      <a href="#"><i class="fas fa-cog"></i><p>Settings</p></a>
+      <a href="#"><i class="fas fa-question-circle"></i><p>Help</p></a>
     </div>
   </div>
 
-  <div class="video-bg">
-    <video class="bg" autoplay muted loop playsinline>
-      <source src="videos/front page3.mp4" type="video/mp4" />
-    </video>
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1 class="hero-heading">Empower Your Career with AI</h1>
+      <p class="hero-subtitle">ZohoVerse combines powerful AI tools with career development resources to help you succeed in the tech industry.</p>
+      <a href="#features" class="cta-button">Explore Features <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </section>
 
-    <div class="content-container">
-      <div class="animated-text-container">
-        <h1 class="animated-text typewriter">Welcome To The All-In-One</h1>
-        <h1 class="animated-text zohoverse typewriter-delay" style="color: rgb(209, 233, 76);">ZohoVerse Platform</h1>
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <h2 class="section-heading">Comprehensive Career Platform</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-robot"></i></div>
+        <h3 class="feature-title">AI-Powered Chatbot</h3>
+        <p class="feature-desc">Get instant answers to coding, career, and interview questions with our intelligent AI assistant.</p>
       </div>
 
       
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+        <h3 class="feature-title">Promptlytics</h3>
+        <p class="feature-desc">Track and optimize your AI prompt performance with advanced analytics.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-microphone"></i></div>
+        <h3 class="feature-title">AI Interview Coach</h3>
+        <p class="feature-desc">Practice technical and behavioral interviews with real-time AI feedback.</p>
+      </div>
+
+      
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-chalkboard"></i></div>
+        <h3 class="feature-title">Collaborative Whiteboard</h3>
+        <p class="feature-desc">Design systems and solve problems with our interactive whiteboarding tool.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+        <h3 class="feature-title">Smart CV Generator</h3>
+        <p class="feature-desc">Create professional, ATS-friendly resumes tailored to your dream job in minutes.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
+        <h3 class="feature-title">Job Portal</h3>
+        <p class="feature-desc">Find curated tech jobs matched to your skills and preferences.</p>
+      </div>
     </div>
+  </section>
+
+  <!-- Dark/Light Mode Toggle -->
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
   </div>
+
+  <script>
+    // Dark/Light Mode Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    let isDark = false;
+
+    // Check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+      html.setAttribute('data-theme', 'dark');
+      isDark = true;
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      isDark = !isDark;
+      const theme = isDark ? 'dark' : 'light';
+      html.setAttribute('data-theme', theme);
+      themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      localStorage.setItem('theme', theme);
+    });
+
+    // Smooth Scrolling for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Animate elements when they come into view
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.feature-card, .section-heading');
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const isVisible = (rect.top <= window.innerHeight * 0.8);
+        if (isVisible) {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }
+      });
+    };
+
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll(); // Trigger on load
+  </script>
 </body>
 </html>
